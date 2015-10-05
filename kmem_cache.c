@@ -3,14 +3,14 @@
  File:    kmem_cache.c
 
  Description:
-   Содержит реализацию кеша динамических объектов.
+   Contains realization of memory caches for dynamic objects of same sizes.
 
   Affected by constants:
     WITHOUT_DEBUG
 
   Notes:
-    Если кеш динамических объектов не используются, то можно этот файл
-    в рабочий проект не включать.
+    It's acceptable to not include this file into project if no memory caches
+    for dynamic objects are used.
 ******************************************************************************/
 #include <stdlib.h>
 #include "que.h"

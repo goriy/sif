@@ -3,8 +3,8 @@
  File:    kmem_cache.h
 
  Description:
-   Содержит интерфейс (структуры, прототипы функций) для работы с кешами
-   динамических объектов.
+   Contains public interface (data structures, function prototypes) for
+   memory caches for dynamic objects of same sizes.
 
   Affected by constants:
     WITHOUT_DEBUG

@@ -3,26 +3,27 @@
 #include <string.h>
 #include "elapsed.h"
 
-
 /*****************************************************************************
   static char *get_buffer (void)
 
-  Возвращает указатель на строку длиной GET_BUFFER_SIZE.
-  Имеются 4 статических буфера такой длины. При каждом вызове этой функции
-  возвращается следующий, естественно, по кругу.
+  Returns pointer to string of GET_BUFFER_SIZE length.
 
-  Нужно для примитивной защиты при многопоточности. Один статический
-  буфер будет испорчен при любой коллизии, а чтоб изгадить 4 надо постраться
-  гораздо сильней.
+  There are 4 static buffers of such length. Each call this function returns
+  next one (on cyclic manner).
 
-  Параметры:
+  It makes sense in multithreaded environment. Any collision could screw up
+  static buffer potentially shared by several threads (there are no special
+  means involved to protect it).
+  To screw up 4 buffers simultaneously is much harder.
+
+  Parameters:
     -
 
-  Возвращает:
-    Указатель на строку.
+  Returns:
+    Pointer to string.
 
-  Примечания:
-    Внутренняя функция.
+  Notes:
+    internal function.
 
 *****************************************************************************/
 #define GET_BUFFER_SIZE   32
