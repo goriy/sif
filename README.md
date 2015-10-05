@@ -41,7 +41,7 @@ Compiler version used:
     gcc.EXE (i686-posix-dwarf-rev0, Built by MinGW-W64 project) 5.2.0
 
 More direct link is -
-[here](http://sourceforge.net/projects/mingw-w64/files/Toolchains%20targetting%20Win32/Personal%20Builds/mingw-builds/5.2.0/threads-posix/dwarf/)
+[HERE](http://sourceforge.net/projects/mingw-w64/files/Toolchains%20targetting%20Win32/Personal%20Builds/mingw-builds/5.2.0/threads-posix/dwarf/)
 or you can use their official installer.
 
 To unpack downloaded file you may use free 7-zip archiver (http://7-zip.org).
@@ -59,4 +59,4 @@ To build program you should run batch file
 *build_all.bat* in project root.
 
 In case of using *jam* build system you should run *jam* in project root
-or just execute batch file *1.bat* therem which does exactly the same.
+or just execute batch file *1.bat* there which does exactly the same.
