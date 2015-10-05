@@ -1,0 +1,62 @@
+##
+
+
+if $(ARCH) = "x64" {
+  CC = x86_64-w64-mingw32-gcc ;
+  LOCATE_TARGET_FOLDER = obj64 ;
+}
+else  {
+  CC = i686-w64-mingw32-gcc ;
+  LOCATE_TARGET_FOLDER = obj32 ;
+}
+
+################################
+## rule to create ico object
+################################
+rule Resource
+{
+  Depends $(<) : $(>) ;
+#  Depends $(<) : $(3) ;
+#  MakeIcoObjectFile $(<) : $(>) ;
+#  Clean clean : $(<) ;
+}
+
+rule UserObject
+{
+    switch $(>:S)
+    {
+        case .rc : Resource $(<) : $(>) ;
+    }
+}
+
+################################
+## actions to create ico object
+################################
+actions Resource
+{
+windres.exe $(>) $(<)
+}
+
+SRC = swnd.c nargv.c res.rc dirwalk.c recent.c mstr.c array.c ini.c config.c search.c mask.c kmem_cache.c save.c elapsed.c shlink.c ;
+
+OUTFILE = sif2 ;
+
+#SEARCH_SOURCE = . ;
+
+OPTIM = -O2 ;
+CCFLAGS = -Wall -funsigned-char ;
+LINK = $(CC) ;
+
+
+LINKLIBS = -lcomctl32 -lole32 -luuid -lshlwapi ;
+LINKFLAGS = -mwindows -static -s -Xlinker --no-insert-timestamp ;
+
+##################
+
+SOURCE = $(SRC) ;
+LOCATE_TARGET = $(LOCATE_TARGET_FOLDER) ;
+#Objects $(SOURCE) ;
+#MainFromObjects $(OUTFILE) : $(SOURCE:S=$(SUFOBJ)) ;
+
+Main $(OUTFILE) : $(SOURCE) ;
+InstallBin bin : $(OUTFILE) ;
