@@ -12,7 +12,10 @@ This tool understands both cp1251 and utf-8 text encodings and both CRLF and LF 
 It supports command line argument and path/file drag'n'drop.
 It automatically creates shortcut in SendTo folder to simplify its usage from windows explorer.
 
-It works on Windows platform (XP, Vista, 7). It should work also on Windows 2000 and Windows 8, but it was never tested yet.
+It works on Windows platform (XP, Vista, 7).
+Also it should work on Windows 2000 and Windows 8, but such case has not been tested yet.
 
-This tool is written in C programming language and doesn't use any "bold" framework (MFC, .NET, ...) - only raw Win32API.
-Due to this it has small size, no complex dependencies and can work without any installation procedure (other than simple exe-file copy).
+This tool is written in C programming language with no"bold" framework (MFC, .NET, ...) involved.
+Raw WinAPI only.
+Due to this it has small size, it has no complex dependencies and thus it can work
+without any installation procedures (other than simple exe-file copy).
