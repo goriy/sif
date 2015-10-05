@@ -443,6 +443,33 @@ found_result_t *fr;
 
   if (!load_file_to_fbuf (ff->name, 0))  return ret;
 
+
+  if (ff->flags & FLAG_BIN)  {
+    Edit_SetText (hRTF, "<<binary file>>");
+    Button_Enable (GetDlgItem (hMainWindow, IDC_SAVELF), 0);
+    Button_Enable (GetDlgItem (hMainWindow, IDC_SAVECRLF), 0);
+    Edit_SetText (GetDlgItem(hMainWindow, IDC_LFIND), "BIN");
+    shown_file[0] = 0;
+    return ret;
+  }
+
+  if ((ff->flags & FLAG_CRLF) == 0)  {
+    if (ff->flags & FLAG_UTF8)  {
+      Edit_SetText (GetDlgItem(hMainWindow, IDC_LFIND), "LF UTF-8");
+    }
+    else  {
+      Edit_SetText (GetDlgItem(hMainWindow, IDC_LFIND), "LF 1251");
+    }
+  }
+  else  {
+    if (ff->flags & FLAG_UTF8)  {
+      Edit_SetText (GetDlgItem(hMainWindow, IDC_LFIND), "CRLF UTF-8");
+    }
+    else  {
+      Edit_SetText (GetDlgItem(hMainWindow, IDC_LFIND), "CRLF 1251");
+    }
+  }
+
   if (!strcmp(shown_file, ff->name))  {
     ret = 0;
   }
@@ -568,32 +595,6 @@ found_result_t *fr;
   ff = find_file_in_results (fln);
   if (!ff) {
     return;
-  }
-
-  if (ff->flags & FLAG_BIN)  {
-    Edit_SetText (hRTF, "<<binary file>>");
-    Button_Enable (GetDlgItem (hMainWindow, IDC_SAVELF), 0);
-    Button_Enable (GetDlgItem (hMainWindow, IDC_SAVECRLF), 0);
-    Edit_SetText (GetDlgItem(hMainWindow, IDC_LFIND), "BIN");
-    shown_file[0] = 0;
-    return;
-  }
-
-  if ((ff->flags & FLAG_CRLF) == 0)  {
-    if (ff->flags & FLAG_UTF8)  {
-      Edit_SetText (GetDlgItem(hMainWindow, IDC_LFIND), "LF UTF-8");
-    }
-    else  {
-      Edit_SetText (GetDlgItem(hMainWindow, IDC_LFIND), "LF 1251");
-    }
-  }
-  else  {
-    if (ff->flags & FLAG_UTF8)  {
-      Edit_SetText (GetDlgItem(hMainWindow, IDC_LFIND), "CRLF UTF-8");
-    }
-    else  {
-      Edit_SetText (GetDlgItem(hMainWindow, IDC_LFIND), "CRLF 1251");
-    }
   }
 
   show_and_highlight_file (ff);
