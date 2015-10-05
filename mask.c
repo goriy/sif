@@ -12,7 +12,7 @@ int ch;
   while ((ch = (*s)))  {
     if      ((ch >= 'a') && (ch <= 'z'))    *s++ = ch - 0x20;
     else if ((ch >= 0xE0) && (ch <= 0xFF))  *s++ = ch - 0x20;
-    else if (ch == '¸')  *s++ = '¨';
+    else if (ch == 0xB8)  *s++ = 0xA8;  // letter YO in cp1251 encoding
     else *s++ = toupper(ch);
   }
 }

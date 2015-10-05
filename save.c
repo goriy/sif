@@ -42,20 +42,20 @@ return;
 //  printf ("GetWindowTextLengthW = %d\n", rtflen);
   rtftext = malloc ((rtflen + 1) * sizeof(wchar_t));
   if (!rtftext)  {
-    msgbox ("Недостаточно памяти. Файл не сохранен.");
+    msgbox ("Not enough memory. File has not been saved.");
     return;
   }
 
   if ((OptSaveEncoding == ENC_UTF8) && (!(loaded_flags & FLAG_UTF8)))  {
-    if (MessageBox(hMainWindow, "Файл был в кодировке CP1251, а запрос на сохранение в UTF-8. Все равно сохранить?",
-                                "Кодировка", MB_YESNO|MB_ICONWARNING|MB_DEFBUTTON2) == IDNO)  {
+    if (MessageBox(hMainWindow, "File initially was in CP1251 encoding. Do you really want to save it in UTF-8?",
+                                "Encoding", MB_YESNO|MB_ICONWARNING|MB_DEFBUTTON2) == IDNO)  {
       free (rtftext);
       return;
     }
   }
   else if ((OptSaveEncoding == ENC_CP1251) && (loaded_flags & FLAG_UTF8))  {
-    if (MessageBox(hMainWindow, "Файл был в кодировке UTF-8, а запрос на сохранение в CP1251. Все равно сохранить?",
-                                "Кодировка", MB_YESNO|MB_ICONWARNING|MB_DEFBUTTON2) == IDNO)  {
+    if (MessageBox(hMainWindow, "File initially was in UTF-8 encoding. Do you really want to save it in CP1251?",
+                                "Encoding", MB_YESNO|MB_ICONWARNING|MB_DEFBUTTON2) == IDNO)  {
       free (rtftext);
       return;
     }
@@ -73,7 +73,7 @@ return;
     utfstring = malloc (rtflen * 4 + 1);
     if (!utfstring)  {
       free (rtftext);
-      msgbox ("Недостаточно памяти. Файл не сохранен.");
+      msgbox ("Not enough memory. File has not been saved.");
       return;
     }
     utflen = WideCharToMultiByte (CP_UTF8, 0, rtftext, rtflen, utfstring, rtflen * 4, NULL, NULL);
@@ -83,7 +83,7 @@ return;
     utfstring = malloc (rtflen * 2 + 1);
     if (!utfstring)  {
       free (rtftext);
-      msgbox ("Недостаточно памяти. Файл не сохранен.");
+      msgbox ("Not enough memory. File has not been saved.");
       return;
     }
     utflen = WideCharToMultiByte (CP_ACP, WC_NO_BEST_FIT_CHARS, rtftext, rtflen, utfstring, rtflen * 2, "?", NULL);
@@ -95,14 +95,14 @@ return;
   strcat (BakFile, ".bak");
   if (CopyFile (loaded_file, BakFile, FALSE) == 0)  {
     free (utfstring);
-    msgbox ("Невозможно скопировать файл .bak. Файл не сохранен.");
+    msgbox ("Error while creating .bak file. File has not been saved.");
     return;
   }
 
   o = fopen (loaded_file, "wb");
   if (!o)  {
     free (utfstring);
-    msgbox ("Невозможно открыть файл на запись. Файл не сохранен.");
+    msgbox ("Error while open file for write. File has not been saved.");
     return;
   }
 

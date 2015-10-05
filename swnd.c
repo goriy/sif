@@ -229,9 +229,9 @@ int WINAPI WinMain(HINSTANCE hinstance, HINSTANCE hprevinst, LPSTR cmdline, int 
     //fprintf (stderr, "SendtoPath = %s\n", SendtoPath);
   }
 
-  strcat (SendtoPath, "\\Поиск в файлах.lnk");
+  strcat (SendtoPath, "\\Search in files.lnk");
 
-  if (CreateShortCut(MyPath, "", SendtoPath, "Поиск в файлах", SW_SHOWNORMAL, "", "", 0) < 0)  {
+  if (CreateShortCut(MyPath, "", SendtoPath, "Search in files", SW_SHOWNORMAL, "", "", 0) < 0)  {
     //fprintf (stderr, "Error create shortcut %ld\n", GetLastError());
   }
 
@@ -596,18 +596,18 @@ NMLISTVIEW *ev;
 
   case WM_DROPFILES:
     fprintf (stderr, "WM_DROPFILES\n");
-   	do {
-   		//	Now comes the code that retrieves the dropped file's path...
-   		//	I guess this is not relevant so you don't struggle understanding it.
-   		//	Just know that 'buffer' will store the dropped file's path.
-   		HDROP hDrop = (HDROP)wparam;
-   		char buffer[MAX_PATH];
-   		char *allfiles = NULL;
-   		int nFilesDropped = DragQueryFile (hDrop, 0xFFFFFFFF, NULL, MAX_PATH);
+    do {
+        //  Now comes the code that retrieves the dropped file's path...
+        //  I guess this is not relevant so you don't struggle understanding it.
+        //  Just know that 'buffer' will store the dropped file's path.
+        HDROP hDrop = (HDROP)wparam;
+        char buffer[MAX_PATH];
+        char *allfiles = NULL;
+        int nFilesDropped = DragQueryFile (hDrop, 0xFFFFFFFF, NULL, MAX_PATH);
 
-   		if (nFilesDropped) {
-   		  allfiles = malloc (MAX_PATH * nFilesDropped + nFilesDropped * 2);
-   		  if (allfiles)  {
+        if (nFilesDropped) {
+          allfiles = malloc (MAX_PATH * nFilesDropped + nFilesDropped * 2);
+          if (allfiles)  {
             int i, ret;
             allfiles[0] = 0;
             for (i = 0; i < nFilesDropped; i++)  {
@@ -622,11 +622,11 @@ NMLISTVIEW *ev;
             do_gui_main_action (allfiles);
             //fprintf (stderr, "DROP: %s\n", allfiles);
             free (allfiles);
-     	  }
-   	    }
-   		DragFinish (hDrop);
-   	} while (0);
-   	break;
+          }
+        }
+        DragFinish (hDrop);
+    } while (0);
+    break;
     default:
         return DefWindowProc(hwnd, msg, wparam, lparam);
     }
@@ -710,9 +710,9 @@ void create_wnd_content0(HWND parent)
 
     wnd = CreateWindowEx(0x00000000, "ComboBox", "", 0x50010203, 588, 264, 90, 72, parent, (HMENU) IDC_SENCODING, instance, NULL);
     SendMessage(wnd, WM_SETFONT, (WPARAM) h_font, TRUE);
-    SendMessage(wnd, CB_ADDSTRING, 0, (LPARAM) "Сохр: auto");
-    SendMessage(wnd, CB_ADDSTRING, 0, (LPARAM) "Сохр: cp1251");
-    SendMessage(wnd, CB_ADDSTRING, 0, (LPARAM) "Сохр: utf-8");
+    SendMessage(wnd, CB_ADDSTRING, 0, (LPARAM) "Save: auto");
+    SendMessage(wnd, CB_ADDSTRING, 0, (LPARAM) "Save: cp1251");
+    SendMessage(wnd, CB_ADDSTRING, 0, (LPARAM) "Save: utf-8");
     ComboBox_SetCurSel (wnd, 0);
 
     /**************************************************************************/
@@ -733,9 +733,9 @@ void create_wnd_content0(HWND parent)
 
     wnd = CreateWindowEx(0x00000000, "ComboBox", "", 0x50010203, 568, 296, 110, 72, parent, (HMENU) IDC_ENCODING, instance, NULL);
     SendMessage(wnd, WM_SETFONT, (WPARAM) h_font, TRUE);
-    SendMessage(wnd, CB_ADDSTRING, 0, (LPARAM) "Файлы: auto");
-    SendMessage(wnd, CB_ADDSTRING, 0, (LPARAM) "Файлы: cp1251");
-    SendMessage(wnd, CB_ADDSTRING, 0, (LPARAM) "Файлы: utf-8");
+    SendMessage(wnd, CB_ADDSTRING, 0, (LPARAM) "Files: auto");
+    SendMessage(wnd, CB_ADDSTRING, 0, (LPARAM) "Files: cp1251");
+    SendMessage(wnd, CB_ADDSTRING, 0, (LPARAM) "Files: utf-8");
     ComboBox_SetCurSel (wnd, 0);
 
     wnd = CreateWindowEx(0x00000000, "Button", "Search", 0x50020007, 0, 284, 692, 60, parent, (HMENU) IDC_GROUP0, instance, NULL);
@@ -755,28 +755,28 @@ void create_wnd_content0(HWND parent)
     col.fmt = LVCFMT_LEFT;
     col.iSubItem = 0;
     col.cx = 200;
-    col.pszText = "Файл";
+    col.pszText = "File";
     ListView_InsertColumn (wnd, 0, &col);
 
     col.mask = LVCF_FMT | LVCF_WIDTH | LVCF_TEXT | LVCF_SUBITEM;
     col.fmt = LVCFMT_LEFT;
     col.iSubItem = 1;
     col.cx = 500;
-    col.pszText = "Строка";
+    col.pszText = "Text";
     ListView_InsertColumn (wnd, 1, &col);
 
     col.mask = LVCF_FMT | LVCF_WIDTH | LVCF_TEXT | LVCF_SUBITEM;
     col.fmt = LVCFMT_LEFT;
     col.iSubItem = 2;
     col.cx = 50;
-    col.pszText = "Смещение";
+    col.pszText = "Offset";
     ListView_InsertColumn (wnd, 2, &col);
 
     col.mask = LVCF_FMT | LVCF_WIDTH | LVCF_TEXT | LVCF_SUBITEM;
     col.fmt = LVCFMT_LEFT;
     col.iSubItem = 3;
     col.cx = 50;
-    col.pszText = "Имя файла";
+    col.pszText = "File name";
     ListView_InsertColumn (wnd, 3, &col);
 
     ListView_SetExtendedListViewStyleEx (wnd, LVS_EX_FULLROWSELECT | LVS_EX_GRIDLINES, LVS_EX_FULLROWSELECT | LVS_EX_GRIDLINES);
