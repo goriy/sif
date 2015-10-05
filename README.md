@@ -40,6 +40,12 @@ Compiler version used:
 
     gcc.EXE (i686-posix-dwarf-rev0, Built by MinGW-W64 project) 5.2.0
 
+More direct link is -
+[here](http://sourceforge.net/projects/mingw-w64/files/Toolchains%20targetting%20Win32/Personal%20Builds/mingw-builds/5.2.0/threads-posix/dwarf/)
+or you can use their official installer.
+
+To unpack downloaded file you may use free 7-zip archiver (http://7-zip.org).
+
 Program can be built by *jam* build system:
 
     FT Jam 2.5.2. OS=NT (http://www.freetype.org/jam/).
