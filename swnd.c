@@ -149,10 +149,11 @@ void populate_dir (void)
     strcpy (CurrentPath, buf);
     current_path_to_edit ();
   }
-  strcat (buf, mask);
   DlgDirListComboBox(hMainWindow, buf, IDC_DRIVES, 0, DDL_DRIVES);
-  DlgDirList (hMainWindow, buf, IDC_FILES, IDC_REALPATH, 0x27);
   DlgDirList (hMainWindow, buf, IDC_DIRS, 0, DDL_DIRECTORY + DDL_EXCLUSIVE);
+  /* if you want to show only files that match mask - uncomment next line */
+  //strcat (buf, mask);
+  DlgDirList (hMainWindow, buf, IDC_FILES, IDC_REALPATH, 0x27);
 
   snprintf (mask, sizeof(mask), "[-%c-]", 'a' +_getdrive() - 1);
   ComboBox_SelectString (GetDlgItem(hMainWindow, IDC_DRIVES), 0, mask);
