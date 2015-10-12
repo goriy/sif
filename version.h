@@ -1,6 +1,6 @@
 #ifndef VERSION_H_INCLUDED
 #define VERSION_H_INCLUDED
 
-#define VERSION_STRING "(2.0)"
+#define VERSION_STRING "(v.2.0-rc2)"
 
 #endif
