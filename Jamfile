@@ -41,7 +41,8 @@ SRC = swnd.c nargv.c res.rc dirwalk.c recent.c mstr.c array.c ini.c config.c sea
 
 OUTFILE = sif2 ;
 
-#SEARCH_SOURCE = . ;
+SEARCH_SOURCE = src res ;
+HDRS = include ;
 
 OPTIM = -O2 ;
 CCFLAGS = -Wall -funsigned-char ;
