@@ -332,6 +332,9 @@ char buf[256];
     recent_fill_combo (IDC_RECENT);
     search_in_path (buf, CurrentPath, FileMask);
   }
+  else  {
+    status_bar (1, "Empty search string!");
+  }
 }
 
 /******************************************************************************/
