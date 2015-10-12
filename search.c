@@ -395,6 +395,14 @@ size_t tmp;
 }
 
 /******************************************************************************/
+static int dcallback(const char *path, char *name, struct _finddata_t *f, int depth)
+{
+  status_bar (1, "%s", path + initial_path_len);
+  do_events ();
+  return 1;
+}
+
+/******************************************************************************/
 void search_in_path (char *lookfor, const char *path, const char *mask)
 {
 static int search_in_progress = 0;
@@ -420,7 +428,7 @@ static int search_in_progress = 0;
 
   search_clear ();
   shown_file[0] = 0;
-  dirwalk (path, mask, OptRecursive, fcallback, NULL);
+  dirwalk (path, mask, OptRecursive, fcallback, dcallback);
   if (CurrentFile != NULL)  {
     kmem_cache_free (&FileCache, CurrentFile);
     CurrentFile = NULL;
