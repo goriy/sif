@@ -107,7 +107,7 @@ return;
   }
 
   p = utfstring;
-  for (i = 0; i < rtflen; i++)  {
+  for (i = 0; i < utflen; i++)  {
     ch = *p++;
     if (ch == 0x0A)  {
       if (crlf)  fputc (0x0D, o);
@@ -118,5 +118,5 @@ return;
     }
   }
   fclose (o);
-  free (rtftext);
+  free (utfstring);
 }
