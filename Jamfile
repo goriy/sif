@@ -1,6 +1,5 @@
 ##
 
-
 if $(ARCH) = "x64" {
   CC = x86_64-w64-mingw32-gcc ;
   LOCATE_TARGET_FOLDER = obj64 ;
@@ -16,9 +15,6 @@ else  {
 rule Resource
 {
   Depends $(<) : $(>) ;
-#  Depends $(<) : $(3) ;
-#  MakeIcoObjectFile $(<) : $(>) ;
-#  Clean clean : $(<) ;
 }
 
 rule UserObject
@@ -48,7 +44,6 @@ OPTIM = -O2 ;
 CCFLAGS = -Wall -funsigned-char ;
 LINK = $(CC) ;
 
-
 LINKLIBS = -lcomctl32 -lole32 -luuid -lshlwapi ;
 LINKFLAGS = -mwindows -static -s -Xlinker --no-insert-timestamp ;
 
@@ -56,8 +51,6 @@ LINKFLAGS = -mwindows -static -s -Xlinker --no-insert-timestamp ;
 
 SOURCE = $(SRC) ;
 LOCATE_TARGET = $(LOCATE_TARGET_FOLDER) ;
-#Objects $(SOURCE) ;
-#MainFromObjects $(OUTFILE) : $(SOURCE:S=$(SUFOBJ)) ;
 
 Main $(OUTFILE) : $(SOURCE) ;
 InstallBin bin : $(OUTFILE) ;
