@@ -1,0 +1,108 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>SIF by goriy</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/github-light.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>SIF</h1>
+        <p>search text in files</p>
+
+        <p class="view"><a href="https://github.com/goriy/sif">View the Project on GitHub <small>goriy/sif</small></a></p>
+
+
+        <ul>
+          <li><a href="https://github.com/goriy/sif/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/goriy/sif/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/goriy/sif">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>
+<a id="search-in-files" class="anchor" href="#search-in-files" aria-hidden="true"><span class="octicon octicon-link"></span></a>Search In Files</h1>
+
+<h2>
+<a id="description" class="anchor" href="#description" aria-hidden="true"><span class="octicon octicon-link"></span></a>Description</h2>
+
+<p>This small tool is intended to search text in multiple files.
+Search results are not only file name, line and column numbers,
+but additionally the whole line from file.</p>
+
+<p>Click on search result loads whole file into edit control with highlight
+of found text.
+Text could be edited and saved right there.</p>
+
+<p>This tool understands both cp1251 and utf-8 text encodings and
+both CRLF and LF line endings.
+It supports command line argument and path/file drag'n'drop.
+It automatically creates shortcut in SendTo folder to simplify
+its usage from windows explorer.</p>
+
+<p>It works on Windows platform (XP, Vista, 7).
+Also it should work on Windows 2000 and Windows 8, but such case
+has not been tested yet.</p>
+
+<p>This tool is written in C programming language with no "bold"
+framework (MFC, .NET, ...) involved. Raw WinAPI only.
+Due to this it has small size, it has no complex dependencies and thus it can work
+without any installation procedures (other than simple exe-file copy).</p>
+
+<h2>
+<a id="how-to-build" class="anchor" href="#how-to-build" aria-hidden="true"><span class="octicon octicon-link"></span></a>How to build</h2>
+
+<h3>
+<a id="tools-used" class="anchor" href="#tools-used" aria-hidden="true"><span class="octicon octicon-link"></span></a>Tools used</h3>
+
+<p>To build search in files utility used free gcc compiler for windows.
+I use Mingw-w64 distro for 32-bit platform
+(<a href="http://mingw-w64.sourceforge.net/">http://mingw-w64.sourceforge.net/</a>). Path to its executables (<em>bin</em>
+subdirectory) should be added to system <em>PATH</em> environment variable
+after installation.</p>
+
+<p>Compiler version used:</p>
+
+<pre><code>gcc.EXE (i686-posix-dwarf-rev0, Built by MinGW-W64 project) 5.2.0
+</code></pre>
+
+<p>More direct link is -
+<a href="http://sourceforge.net/projects/mingw-w64/files/Toolchains%20targetting%20Win32/Personal%20Builds/mingw-builds/5.2.0/threads-posix/dwarf/">HERE</a>
+or you can use their official installer.</p>
+
+<p>To unpack downloaded file you may use free 7-zip archiver (<a href="http://7-zip.org">http://7-zip.org</a>).</p>
+
+<p>Program can be built by <em>jam</em> build system:</p>
+
+<pre><code>FT Jam 2.5.2. OS=NT (http://www.freetype.org/jam/).
+</code></pre>
+
+<p>It's not necessary to use <em>jam</em> as a build system, but in case you will
+you should also add path to <em>jam.exe</em> to system <em>PATH</em> environment variable.</p>
+
+<h3>
+<a id="build-program" class="anchor" href="#build-program" aria-hidden="true"><span class="octicon octicon-link"></span></a>Build program</h3>
+
+<p>To build program you should run batch file
+<em>build_all.bat</em> in project root.</p>
+
+<p>In case of using <em>jam</em> build system you should run <em>jam</em> in project root
+or just execute batch file <em>1.bat</em> there which does exactly the same.</p>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/goriy">goriy</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+    
+  </body>
+</html>
