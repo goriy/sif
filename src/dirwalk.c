@@ -13,14 +13,7 @@
 #include <stdlib.h>
 
 #include "dirwalk.h"
-
-
-#define MASK_USED
-
-
-#ifdef MASK_USED
 #include "mask.h"
-#endif
 
 /* ======================================================= */
 
@@ -45,17 +38,10 @@ struct _finddata_t f;
 char *npath;
 int res;
 
-    #ifdef MASK_USED
     npath = (char *)malloc(strlen(path)+3+3);
     strcpy (npath, path);
     strcat (npath, DIR_SEPARATOR);
     strcat (npath, "*");
-    #else
-    npath = (char *)malloc(strlen(path)+strlen(filter)+3);
-    strcpy (npath, path);
-    strcat (npath, DIR_SEPARATOR);
-    strcat (npath, filter);
-    #endif
 
     id = _findfirst (npath, &f);
 
@@ -75,17 +61,10 @@ int res;
 //              printf ("%08d\td\t%s/%s\n", depth, path,f.name);
 //              fprintf (stderr, "%s/%s\n", path,f.name);
 */
-            #ifdef MASK_USED
             npath = (char *)malloc(strlen(path)+5+strlen(f.name));
             strcpy (npath, path);
             strcat (npath, DIR_SEPARATOR);
             strcat (npath, f.name);
-            #else
-            npath = (char *)malloc(strlen(path)+5+strlen(f.name));
-            strcpy (npath, path);
-            strcat (npath, DIR_SEPARATOR);
-            strcat (npath, f.name);
-            #endif
             res = 1;
             if (dfunc != NULL)  {
               res = dfunc (npath, f.name, &f, depth);
@@ -101,17 +80,12 @@ int res;
         }
         else    {
           if (ffunc != NULL)  {
-            #ifdef MASK_USED
             if (mask_match (f.name, filter))  {
 /*              printf ("  [OK]\n");*/
               res = ffunc (path, f.name, &f, depth);
               if (!res) return 0;
             }
 /*            else printf ("  [FAIL]\n");*/
-            #else
-            res = ffunc (path, f.name, &f, depth);
-            if (!res) return 0;
-            #endif
           }
 /*          printf ("%08d\tf\t%s/%s\n", depth, path, f.name);*/
         }
