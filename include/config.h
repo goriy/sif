@@ -12,6 +12,9 @@ extern char OptFontFace[LF_FACESIZE+1];
 extern LONG OptFontHeight;
 extern int  OptSaveEncoding;
 
+extern LONG WindowWidth;
+extern LONG WindowHeight;
+
 void config_init (void);
 void config_save (void);
 void config_destroy (void);

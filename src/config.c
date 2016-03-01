@@ -13,6 +13,8 @@ char FileMask[_MAX_PATH];
 char OptFontFace[LF_FACESIZE+1];
 LONG OptFontHeight = 0;
 int  OptSaveEncoding = 1;
+LONG WindowWidth = 0L;
+LONG WindowHeight = 0L;
 
 /******************************************************************************/
 void config_init (void)
@@ -37,6 +39,14 @@ char *tmp;
   tmp = ini_search (&Cfg, "Settings", "Font", "Courier New");
   strncpy (OptFontFace, tmp, sizeof(OptFontFace)-1);
   OptFontFace[LF_FACESIZE] = 0;
+  WindowWidth = ini_search_long (&Cfg, "Settings", "WindowWidth", DEFAULT_WIDTH);
+  WindowHeight = ini_search_long (&Cfg, "Settings", "WindowHeight", DEFAULT_HEIGHT);
+  if (WindowWidth < MINIMUM_WIDTH)  {
+    WindowWidth = MINIMUM_WIDTH;
+  }
+  if (WindowHeight < MINIMUM_HEIGHT)  {
+    WindowHeight = MINIMUM_HEIGHT;
+  }
 }
 
 /******************************************************************************/
@@ -54,6 +64,8 @@ FILE *o;
     fprintf (o, "FileMask = %s\n", FileMask);
     fprintf (o, "FontHeight = %ld\n", OptFontHeight);
     fprintf (o, "Font = %s\n", OptFontFace);
+    fprintf (o, "WindowWidth = %ld\n", WindowWidth);
+    fprintf (o, "WindowHeight = %ld\n", WindowHeight);
     fclose (o);
   }
 }

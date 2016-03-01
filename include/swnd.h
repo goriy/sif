@@ -1,6 +1,12 @@
 #ifndef __SWND_H__
 #define __SWND_H__
 
+// window size in pixels
+#define DEFAULT_WIDTH    800
+#define DEFAULT_HEIGHT   570
+#define MINIMUM_WIDTH    700
+#define MINIMUM_HEIGHT   560
+
 // identifiers.
 #define IDC_LFIND     2000
 #define IDC_RECENT    2001
@@ -28,7 +34,6 @@
 #define IDC_RE        2023
 #define IDC_FONT      2024
 #define IDC_SENCODING 2025
-
 
 extern HWND  hMainWindow;
 extern HWND  hResult;

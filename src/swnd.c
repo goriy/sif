@@ -664,7 +664,7 @@ CHARRANGE cr;
 HWND create_wnd0()
 {
     HWND wnd;
-    wnd = CreateWindowEx(0x00000100, WND_CLASS_NAME0, "Search in files " VERSION_STRING, 0x14CF0000, CW_USEDEFAULT, CW_USEDEFAULT, 900, 640, NULL, NULL, instance, NULL);
+    wnd = CreateWindowEx(0x00000100, WND_CLASS_NAME0, "Search in files " VERSION_STRING, 0x14CF0000, CW_USEDEFAULT, CW_USEDEFAULT, WindowWidth, WindowHeight, NULL, NULL, instance, NULL);
     ShowWindow(wnd, SW_SHOWNORMAL);
     UpdateWindow(wnd);
     return wnd;
@@ -941,12 +941,17 @@ dim_t wh[22];
     wWidth  = MainWindowRect.right  - MainWindowRect.left;
     wHeight = MainWindowRect.bottom - MainWindowRect.top;
 
-    if ((wWidth < 700) || (wHeight < 640))  {
-      if (wWidth < 700)  wWidth = 700;
-      if (wHeight < 640) wHeight = 640;
+    if ((wWidth < MINIMUM_WIDTH) || (wHeight < MINIMUM_HEIGHT))  {
+      if (wWidth < MINIMUM_WIDTH)  wWidth = MINIMUM_WIDTH;
+      if (wHeight < MINIMUM_HEIGHT) wHeight = MINIMUM_HEIGHT;
+      WindowWidth = wWidth;
+      WindowHeight = wHeight;
       MoveWindow (hMainWindow, MainWindowRect.left, MainWindowRect.top, wWidth, wHeight, TRUE);
       return;
     }
+
+    WindowWidth = wWidth;
+    WindowHeight = wHeight;
 
     GetClientRect(hMainWindow, &MainWindowRect);
     wWidth  = MainWindowRect.right  - MainWindowRect.left;
