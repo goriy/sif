@@ -8,6 +8,7 @@
 char *remove_crlf (char *s);
 int  read_line (FILE *in, char *buf, long buflen);
 int  m_isspace (int ch);
+int  m_is_space_string (const char *s);
 char *trim_string (char *s);
 unsigned long ustrtoul (const char *start, const char *end);
 long ustrtol (const char *start, const char *end);

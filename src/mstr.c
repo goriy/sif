@@ -40,6 +40,20 @@ int m_isspace (int ch)
   else          return 0;
 }
 /*************************************************/
+int m_is_space_string (const char *s)
+{
+char ch;
+int ret = 1;
+  while ((ch = *s++))  {
+    if (!m_isspace(ch)) {
+      ret = 0;
+      break;
+    }
+  }
+  return ret;
+}
+
+/*************************************************/
 char *trim_string (char *s)
 {
 char ch;
