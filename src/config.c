@@ -9,7 +9,7 @@ static char CfgFile[_MAX_PATH];
 
 int OptRegex = 0, OptCasesense = 0, OptUtf = 0, OptRecursive = 0;
 char *pMask;
-char FileMask[_MAX_PATH];
+char FileMask[MAX_MASK_LEN];
 char OptFontFace[LF_FACESIZE+1];
 LONG OptFontHeight = 0;
 int  OptSaveEncoding = 1;

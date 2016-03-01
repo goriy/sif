@@ -5,8 +5,10 @@
 #define ENC_CP1251  1
 #define ENC_UTF8    2
 
+#define MAX_MASK_LEN   1024
+
 extern int OptRegex, OptCasesense, OptUtf, OptRecursive;
-extern char FileMask[_MAX_PATH];
+extern char FileMask[MAX_MASK_LEN];
 
 extern char OptFontFace[LF_FACESIZE+1];
 extern LONG OptFontHeight;

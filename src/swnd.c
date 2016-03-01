@@ -132,7 +132,7 @@ BOOL DirectoryExists(LPCTSTR szPath)
 void populate_dir (void)
 {
   char buf[MAX_PATH];
-  char mask[128];
+  char mask[MAX_MASK_LEN];
   GetWindowText(GetDlgItem(hMainWindow, IDC_MANPATH), buf, sizeof(buf));
   GetWindowText(GetDlgItem(hMainWindow, IDC_MASK), mask, sizeof(mask));
   if (!DirectoryExists(buf))  {
@@ -697,6 +697,7 @@ void create_wnd_content0(HWND parent)
     SendMessage(wnd, WM_SETFONT, (WPARAM) h_font, TRUE);
     wnd = CreateWindowEx(0x00000200, "Edit", "*.*", 0x50010000, 124, 264, 94, 20, parent, (HMENU) IDC_MASK, instance, NULL);
     SendMessage(wnd, WM_SETFONT, (WPARAM) h_font, TRUE);
+    Edit_LimitText (wnd, MAX_MASK_LEN-1);
     oldMaskProc = (WNDPROC)SetWindowLongPtr(wnd, GWLP_WNDPROC, (LONG_PTR)mask_input_proc);
     wnd = CreateWindowEx(0x00000000, "Button", "&Recursive", 0x50010003, 4, 264, 70, 20, parent, (HMENU) IDC_RECURSIV, instance, NULL);
     SendMessage(wnd, WM_SETFONT, (WPARAM) h_font, TRUE);

@@ -1,7 +1,10 @@
+#include <windows.h>
 #include <string.h>
 #include <stdlib.h>
 #include <ctype.h>
 #include <stdio.h>
+#include "config.h"
+#include "mask.h"
 
 #define PC_TEST 0
 
