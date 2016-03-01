@@ -6,12 +6,12 @@
 
 
 */
-
+#include <windows.h>
 #include <stdio.h>
 #include <string.h>
 #include <io.h>
 #include <stdlib.h>
-
+#include "config.h"
 #include "dirwalk.h"
 #include "mask.h"
 
@@ -31,7 +31,7 @@ void *p;
 
 /* ======================================================= */
 
-static int get_contents (const char *path, const char *filter, int depth, int recurse, DWALK_FUNC ffunc, DWALK_FUNC dfunc)
+static int get_contents (const char *path, mask_t *filter, int depth, int recurse, DWALK_FUNC ffunc, DWALK_FUNC dfunc)
 {
 long id;
 struct _finddata_t f;
@@ -80,7 +80,7 @@ int res;
         }
         else    {
           if (ffunc != NULL)  {
-            if (mask_match (f.name, filter))  {
+            if (masks_match (f.name, filter))  {
 /*              printf ("  [OK]\n");*/
               res = ffunc (path, f.name, &f, depth);
               if (!res) return 0;
@@ -95,14 +95,16 @@ int res;
 }
 
 /* ======================================================= */
-
 void dirwalk (const char *path, const char *filter, int recurse, DWALK_FUNC ffunc, DWALK_FUNC dfunc)
 {
-    get_contents (path,filter,0,recurse,ffunc,dfunc);
+mask_t MultipleMasks;
+
+    masks_prepare (filter, &MultipleMasks);
+    get_contents (path,&MultipleMasks,0,recurse,ffunc,dfunc);
+    masks_unprepare (&MultipleMasks);
 }
 
 /* ======================================================= */
-
 void path_mask (char *full, char **path, char **mask)
 {
 char *p, *m;

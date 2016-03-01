@@ -6,6 +6,7 @@
 
 * main window dimensions are stored in configuration file
 * minimal possible window width and height are decreased (to use on low resolution displays)
+* added support for multiple file masks (comma or semicolon separated)
 
 ## [2.0-rc2](https://github.com/goriy/sif/releases/tag/v.2.0-rc2) (2015-10-16)
 
