@@ -1,6 +1,10 @@
 # Change Log
 
-## [2.0-rc3](https://github.com/goriy/sif/releases/tag/v.2.0-rc3) (not released yet)
+## [2.0-rc4](https://github.com/goriy/sif/releases/tag/v.2.0-rc4) (not released yet)
+
+## [2.0-rc3](https://github.com/goriy/sif/releases/tag/v.2.0-rc3) (2016-03-01)
+
+[Full Changelog](https://github.com/goriy/sif/compare/v.2.0-rc2...v.2.0-rc3)
 
 **Improvements:**
 
