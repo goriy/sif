@@ -2,6 +2,11 @@
 
 ## [2.0-rc3](https://github.com/goriy/sif/releases/tag/v.2.0-rc3) (not released yet)
 
+**Improvements:**
+
+* main window dimensions are stored in configuration file
+* minimal possible window width and height are decreased (to use on low resolution displays)
+
 ## [2.0-rc2](https://github.com/goriy/sif/releases/tag/v.2.0-rc2) (2015-10-16)
 
 [Full Changelog](https://github.com/goriy/sif/compare/v.2.0-rc1...v.2.0-rc2)
