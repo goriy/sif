@@ -266,7 +266,7 @@ int linelen = 0;
   loaded_file[0] = 0;
   for (i = 0; i < l; i++)  {
     c = *p;
-    if ((c == 0x0A))  {
+    if ((c == 0x0A) || (i == (l-1)))  {
       wchar_t *fnd;
       //printf ("%s: found lf at 0x%X (str = %d)\n", fullname + initial_path_len, p - fbuf, str - fbuf);
 
@@ -652,7 +652,7 @@ static char tbuf[LINE_LEN*2];
     tbuf[i] = 0;
     ListView_SetItemText (wnd, index, 1, tbuf);
 
-    snprintf (buf, sizeof(buf), "%lu", result->offset);
+    snprintf (buf, sizeof(buf), "%u", result->offset);
     ListView_SetItemText (wnd, index, 2, buf);
     ListView_SetItemText (wnd, index, 3, file->name);
   }
