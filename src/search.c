@@ -169,7 +169,15 @@ int ret = 0;
 size_t new_loaded_len;
 int tmp;
 
-  if (!strcmp(loaded_file, fullname))  return 1;  // do not load if already loaded
+  if (!for_search)  {
+    // do not reload already loaded file only if it's for show, not for search.
+    // Searching should not use cached data, because loaded file content is
+    // suitable for show, not for text search (due to missing case conversion,
+    // for example)
+    if (!strcmp(loaded_file, fullname))  {
+      return 1;  // do not load if already loaded
+    }
+  }
 
   in = fopen (fullname, "rb");
   if (!in)  {
@@ -179,61 +187,67 @@ int tmp;
 
   loaded_flags = 0;
 
-  if (!feof(in))  {
-    loaded_len = fread (fbuf, sizeof(unsigned char), FBUF_SIZE-1, in);
-    fbuf[loaded_len] = 0;
-    fbuf[FBUF_SIZE-1] = 0;
+  if (feof(in))  {  // if empty file
+    fclose (in);
+    return ret;
+  }
 
-    if (is_file_binary(fbuf, loaded_len))  {
-      loaded_flags = FLAG_BIN;
-      fclose (in);
-      return 1;
-    }
+  loaded_len = fread (fbuf, sizeof(unsigned char), FBUF_SIZE-1, in);
+  fbuf[loaded_len] = 0;
+  fbuf[FBUF_SIZE-1] = 0;
+  fclose (in);
 
-    new_loaded_len = remove_chr_len (fbuf, 0x0D, loaded_len);
-    fbuf[new_loaded_len] = 0;
-    if (new_loaded_len != loaded_len)  {
-      loaded_flags |= FLAG_CRLF;
-      loaded_len = new_loaded_len;
-    }
+  if (is_file_binary(fbuf, loaded_len))  {
+    loaded_flags = FLAG_BIN;
+    return 1;
+  }
 
-    if (OptUtf == ENC_AUTO)  {
-      SetLastError (0);
-      tmp = MultiByteToWideChar (CP_UTF8, MB_ERR_INVALID_CHARS, fbuf, loaded_len, fbufUnicode, FBUF_SIZE);
-      fbufUnicode[tmp] = 0;
-      if (GetLastError() == 0)  {
-        loaded_flags |= FLAG_UTF8;
-      }
-      else  {
-        //printf ("Last Error = %lu\n", GetLastError());
-        tmp = MultiByteToWideChar (CP_ACP, MB_ERR_INVALID_CHARS, fbuf, loaded_len, fbufUnicode, FBUF_SIZE);
-        fbufUnicode[tmp] = 0;
-      }
+  new_loaded_len = remove_chr_len (fbuf, 0x0D, loaded_len);
+  fbuf[new_loaded_len] = 0;
+  if (new_loaded_len != loaded_len)  {
+    loaded_flags |= FLAG_CRLF;
+    loaded_len = new_loaded_len;
+  }
+
+  if (OptUtf == ENC_AUTO)  {
+    SetLastError (0);
+    tmp = MultiByteToWideChar (CP_UTF8, MB_ERR_INVALID_CHARS, fbuf, loaded_len, fbufUnicode, FBUF_SIZE);
+    fbufUnicode[tmp] = 0;
+    if (GetLastError() == 0)  {
+      loaded_flags |= FLAG_UTF8;
     }
-    else if (OptUtf == ENC_CP1251) {
+    else  {
+      //printf ("Last Error = %lu\n", GetLastError());
       tmp = MultiByteToWideChar (CP_ACP, MB_ERR_INVALID_CHARS, fbuf, loaded_len, fbufUnicode, FBUF_SIZE);
       fbufUnicode[tmp] = 0;
     }
-    else  {
-      tmp = MultiByteToWideChar (CP_UTF8, 0, fbuf, loaded_len, fbufUnicode, FBUF_SIZE);
-      fbufUnicode[tmp] = 0;
-      loaded_flags |= FLAG_UTF8;
-    }
-    unicode_len = tmp;
-
-    if ((for_search) && (!OptCasesense))  {
-      makeupper (fbufUnicode, unicode_len, fbufForSearch);
-      BufferToSearch = fbufForSearch;
-    }
-    else  {
-      BufferToSearch = fbufUnicode;
-    }
-
-    //printf ("%s: fread %u bytes\n", fullname + initial_path_len, loaded_len);
-    strcpy (loaded_file, fullname);
-    ret = 1;
   }
-  fclose (in);
+  else if (OptUtf == ENC_CP1251) {
+    tmp = MultiByteToWideChar (CP_ACP, MB_ERR_INVALID_CHARS, fbuf, loaded_len, fbufUnicode, FBUF_SIZE);
+    fbufUnicode[tmp] = 0;
+  }
+  else  {
+    tmp = MultiByteToWideChar (CP_UTF8, 0, fbuf, loaded_len, fbufUnicode, FBUF_SIZE);
+    fbufUnicode[tmp] = 0;
+    loaded_flags |= FLAG_UTF8;
+  }
+  unicode_len = tmp;
+
+  if ((for_search) && (!OptCasesense))  {
+    makeupper (fbufUnicode, unicode_len, fbufForSearch);
+    BufferToSearch = fbufForSearch;
+  }
+  else  {
+    BufferToSearch = fbufUnicode;
+  }
+
+  //printf ("%s: fread %u bytes\n", fullname + initial_path_len, loaded_len);
+  if (!for_search)  {
+    // remember loaded filename only if it was loaded not for search,
+    // because search process corrupts buffer content
+    strcpy (loaded_file, fullname);
+  }
+  ret = 1;
   return ret;
 }
 
@@ -263,7 +277,7 @@ int linelen = 0;
   str = BufferToSearch;
   p = str;
   line = 1;
-  loaded_file[0] = 0;
+
   for (i = 0; i < l; i++)  {
     c = *p;
     if ((c == 0x0A) || (i == (l-1)))  {
@@ -426,13 +440,24 @@ static int search_in_progress = 0;
     makeupper (LookFor, LookForLen, LookFor);
   }
 
+  /* delete all previous search results */
   search_clear ();
+
+  /* Drop name of currently loaded file. Force to re-show it later. */
   shown_file[0] = 0;
+
+  /* Drop name of currently loaded file. Force to reload on next load call.
+   * It's necessary because currently loaded file content is suitable for
+   * show, not for text search (missing case conversion, for example). */
+  loaded_file[0] = 0;
+
   dirwalk (path, mask, OptRecursive, fcallback, dcallback);
+
   if (CurrentFile != NULL)  {
     kmem_cache_free (&FileCache, CurrentFile);
     CurrentFile = NULL;
   }
+
   #if WITH_ALLOC_COUNT
   status_bar (1, "Found: %d %s (%ld %ld)", FoundEntries, elapsed_result(&Elapsed), FileCache.allocated, ResCache.allocated);
   #else

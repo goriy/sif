@@ -1,6 +1,16 @@
 # Change Log
 
-## [2.0-rc5](https://github.com/goriy/sif/releases/tag/v.2.0-rc5) (not released yet)
+## [2.0-rc6](https://github.com/goriy/sif/releases/tag/v.2.0-rc6) (not released yet)
+
+## [2.0-rc5](https://github.com/goriy/sif/releases/tag/v.2.0-rc5) (2016-12-05)
+
+[Full Changelog](https://github.com/goriy/sif/compare/v.2.0-rc4...v.2.0-rc5)
+
+**Fixed bugs:**
+
+* file loaded for preview was not reloaded during next search. That next search
+  results were empty if search was case insensitive (cached data was not properly
+  prepared for search).
 
 ## [2.0-rc4](https://github.com/goriy/sif/releases/tag/v.2.0-rc4) (2016-12-04)
 
