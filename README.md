@@ -38,10 +38,14 @@ after installation.
 
 Compiler version used:
 
-    gcc.EXE (i686-posix-dwarf-rev0, Built by MinGW-W64 project) 5.3.0
+    gcc.EXE (i686-posix-dwarf-rev1, Built by MinGW-W64 project) 6.2.0
 
-More direct link is -
-[HERE](http://sourceforge.net/projects/mingw-w64/files/Toolchains%20targetting%20Win32/Personal%20Builds/mingw-builds/5.3.0/threads-posix/dwarf/)
+    gcc.EXE (x86_64-posix-seh-rev1, Built by MinGW-W64 project) 6.2.0
+
+More direct links are -
+[HERE](http://sourceforge.net/projects/mingw-w64/files/Toolchains%20targetting%20Win32/Personal%20Builds/mingw-builds/6.2.0/threads-posix/dwarf/)
+and 
+[HERE](http://sourceforge.net/projects/mingw-w64/files/Toolchains%20targetting%20Win64/Personal%20Builds/mingw-builds/6.2.0/threads-posix/seh/)
 or you can use their official installer.
 
 To unpack downloaded file you may use free 7-zip archiver (http://7-zip.org).
