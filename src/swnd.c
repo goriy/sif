@@ -573,13 +573,15 @@ NMLISTVIEW *ev;
 
     case WM_ACTIVATE:
         //printf ("WM_ACTIVATE: %d\n", wparam);
-        if (0 == wparam)             // becoming inactive
+        if (0 == wparam) {          // becoming inactive
            hDlgCurrent = NULL;
-        else                         // becoming active
-           if (GetAsyncKeyState (VK_ESCAPE) & 0x8000)  {
-             OnActivateEscape = 1;
-           }
-           hDlgCurrent = hMainWindow;
+        }
+        else {                      // becoming active
+          if (GetAsyncKeyState (VK_ESCAPE) & 0x8000)  {
+            OnActivateEscape = 1;
+          }
+          hDlgCurrent = hMainWindow;
+        }
         return FALSE;
     case WM_NOTIFY:
         ev = (NMLISTVIEW *)lparam;
