@@ -3,10 +3,12 @@
 if $(ARCH) = "x64" {
   CC = x86_64-w64-mingw32-gcc ;
   LOCATE_TARGET_FOLDER = obj64 ;
+  OUTFILE = sif2_x64 ;
 }
 else  {
   CC = i686-w64-mingw32-gcc ;
   LOCATE_TARGET_FOLDER = obj32 ;
+  OUTFILE = sif2 ;
 }
 
 ################################
@@ -34,8 +36,6 @@ windres.exe $(>) $(<)
 }
 
 SRC = swnd.c nargv.c res.rc dirwalk.c recent.c mstr.c array.c ini.c config.c search.c mask.c kmem_cache.c save.c elapsed.c shlink.c ;
-
-OUTFILE = sif2 ;
 
 SEARCH_SOURCE = src res ;
 HDRS = include ;
