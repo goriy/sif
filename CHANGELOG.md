@@ -1,6 +1,14 @@
 # Change Log
 
-## [2.0-rc4](https://github.com/goriy/sif/releases/tag/v.2.0-rc4) (not released yet)
+## [2.0-rc5](https://github.com/goriy/sif/releases/tag/v.2.0-rc5) (not released yet)
+
+## [2.0-rc4](https://github.com/goriy/sif/releases/tag/v.2.0-rc4) (2016-12-04)
+
+[Full Changelog](https://github.com/goriy/sif/compare/v.2.0-rc3...v.2.0-rc4)
+
+**Fixed bugs:**
+
+* program was unable to find anything in non-empty last line of file
 
 ## [2.0-rc3](https://github.com/goriy/sif/releases/tag/v.2.0-rc3) (2016-03-01)
 
