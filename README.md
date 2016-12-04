@@ -31,7 +31,7 @@ without any installation procedures (other than simple exe-file copy).
 ### Tools used
 
 To build search in files utility used free gcc compiler for windows.
-I use Mingw-w64 distro for 32-bit platform
+I use Mingw-w64 distro for 32-bit and 64-bit platforms
 (http://mingw-w64.sourceforge.net/). Path to its executables (*bin*
 subdirectory) should be added to system *PATH* environment variable
 after installation.
@@ -43,9 +43,9 @@ Compiler version used:
     gcc.EXE (x86_64-posix-seh-rev1, Built by MinGW-W64 project) 6.2.0
 
 More direct links are -
-[HERE](http://sourceforge.net/projects/mingw-w64/files/Toolchains%20targetting%20Win32/Personal%20Builds/mingw-builds/6.2.0/threads-posix/dwarf/)
+[HERE i686](http://sourceforge.net/projects/mingw-w64/files/Toolchains%20targetting%20Win32/Personal%20Builds/mingw-builds/6.2.0/threads-posix/dwarf/)
 and 
-[HERE](http://sourceforge.net/projects/mingw-w64/files/Toolchains%20targetting%20Win64/Personal%20Builds/mingw-builds/6.2.0/threads-posix/seh/)
+[HERE x86_64](http://sourceforge.net/projects/mingw-w64/files/Toolchains%20targetting%20Win64/Personal%20Builds/mingw-builds/6.2.0/threads-posix/seh/)
 or you can use their official installer.
 
 To unpack downloaded file you may use free 7-zip archiver (http://7-zip.org).
