@@ -509,6 +509,8 @@ found_result_t *fr;
   else  {
     strcpy (shown_file, ff->name);
 
+    SendMessage(hRTF, WM_SETREDRAW, 0, 0);
+
     //int i = WideCharToMultiByte (CP_ACP, WC_NO_BEST_FIT_CHARS, fbufUnicode, unicode_len, fbuf, sizeof(fbuf)-1, "?", NULL);
     //fbuf[i] = 0;
 
@@ -555,6 +557,8 @@ found_result_t *fr;
 
     SendMessage(hRTF, EM_HIDESELECTION, 0, 0);
     ret = 0;
+    SendMessage(hRTF, WM_SETREDRAW, 1, 0);
+    RedrawWindow(hRTF, NULL, NULL, RDW_ERASE | RDW_FRAME | RDW_INVALIDATE | RDW_ALLCHILDREN);
   }
   return ret;
 }
