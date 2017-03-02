@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-#include <Windows.h>
+#include <windows.h>
 #include <shlobj.h>
 #include <winnls.h>
 //#include <shobjidl.h>

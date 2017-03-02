@@ -16,18 +16,18 @@
 #include <windows.h>
 #include <commctrl.h>        // INCLUDE LIBRARY comctl32.lib INTO YOUR PROJECT!
 //#include "resource.h"   // UNCOMMENT THIS IF YOU USE RESOURCES.
-#include <Windowsx.h>
+#include <windowsx.h>
 #include <stdio.h>
 #include <stdarg.h>
 #include "version.h"
 #include <stdlib.h>
 #include <direct.h>
 #include "nargv.h"
-#include "Shlwapi.h"
+#include "shlwapi.h"
 #include <richedit.h>
 #include "swnd.h"
 #include "recent.h"
-#include "Shlobj.h"
+#include "shlobj.h"
 #include "config.h"
 #include "search.h"
 #include "save.h"

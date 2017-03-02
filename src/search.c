@@ -4,7 +4,7 @@
 #include <string.h>
 #include "config.h"
 #include <commctrl.h>        // INCLUDE LIBRARY comctl32.lib INTO YOUR PROJECT!
-#include <Windowsx.h>
+#include <windowsx.h>
 #include <richedit.h>
 #include "swnd.h"
 #include <io.h>
