@@ -1,0 +1,77 @@
+########################################
+
+DEFAULT_ARCH_WINDOWS ?= "win32" ;
+DEFAULT_ARCH_LINUX   ?= "linux32" ;
+BITS64_SEP ?= "" ;
+OUTFILE_BASE ?= a ;
+
+if $(NT)  {
+  ARCH ?= $(DEFAULT_ARCH_WINDOWS) ;
+  SEP = \\ ;
+}
+else  {
+  ARCH ?= $(DEFAULT_ARCH_LINUX) ;
+  SEP = / ;
+} 
+
+if $(ARCH) = "linux64" {
+  TARGET_PLATFORM = linux ;
+  BITS = 64 ;
+  CPREFIX = "" ; 
+  OUTFILE = $(OUTFILE_BASE)$(BITS64_SEP)64 ;
+  ARCHFLAGS = -m64 ;
+  ARCHASFLAGS = --64 ;
+  ARCHLINKFLAGS = $(ARCHFLAGS) ;
+}
+else if $(ARCH) = "linux32" {
+  TARGET_PLATFORM = linux ;
+  BITS = 32 ;
+  CPREFIX = "" ; 
+  OUTFILE = $(OUTFILE_BASE) ;
+  ARCHFLAGS = -m32 ;
+  ARCHASFLAGS = --32 ;
+  ARCHLINKFLAGS = $(ARCHFLAGS) ;
+}
+else if $(ARCH) = "win64" {
+  TARGET_PLATFORM = win ;
+  BITS = 64 ;
+  CPREFIX = x86_64-w64-mingw32- ; 
+  SUFEXE = .exe ;
+  OUTFILE = $(OUTFILE_BASE)$(BITS64_SEP)64 ;
+  ARCHFLAGS = -m64 ;
+  ARCHASFLAGS = "" ;
+  ARCHLINKFLAGS = -static -Xlinker --no-insert-timestamp ;
+}
+else if $(ARCH) = "win32" {
+  TARGET_PLATFORM = win ;
+  BITS = 32 ;
+  CPREFIX = i686-w64-mingw32- ;
+  SUFEXE = .exe ;
+  OUTFILE = $(OUTFILE_BASE) ;
+  ARCHFLAGS = -m32 ;
+  ARCHASFLAGS = "" ;
+  ARCHLINKFLAGS = -static -Xlinker --no-insert-timestamp ;
+}
+else  {
+  Exit "Unknown target arch '" $(ARCH) "'" ;
+}
+
+Echo "Target arch =" $(ARCH) ;
+Echo "------------------------" ;
+
+#AS  = $(CPREFIX)as ;
+CC  = $(CPREFIX)gcc ;
+C++ = $(CPREFIX)g++ ;
+AR  = $(CPREFIX)gcc-ar ru ;
+RANLIB = $(CPREFIX)gcc-ranlib ;
+LINK = $(CC) ;
+if $(NT)  {
+  WINDRES = windres ;
+}
+else  {
+  WINDRES = $(CPREFIX)windres ;
+}
+
+LOCATE_TARGET = obj$(SEP)$(ARCH) ;
+
+OUTDIR ?= "." ;

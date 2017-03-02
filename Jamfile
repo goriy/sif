@@ -1,15 +1,22 @@
-##
+#
 
-if $(ARCH) = "x64" {
-  CC = x86_64-w64-mingw32-gcc ;
-  LOCATE_TARGET_FOLDER = obj64 ;
-  OUTFILE = sif2_x64 ;
-}
-else  {
-  CC = i686-w64-mingw32-gcc ;
-  LOCATE_TARGET_FOLDER = obj32 ;
-  OUTFILE = sif2 ;
-}
+OUTFILE_BASE = sif2 ;
+OUTDIR ?= bin ;
+SUBDIR ?= . ;
+BITS64_SEP = _ ;
+
+include $(SUBDIR)/Jam.toolchain ;
+
+SRC = swnd.c nargv.c res.rc dirwalk.c recent.c mstr.c array.c ini.c config.c search.c mask.c kmem_cache.c save.c elapsed.c shlink.c ;
+
+SEARCH_SOURCE = src res ;
+HDRS = include ;
+
+OPTIM = -O2 ;
+CCFLAGS = -Wall -funsigned-char $(ARCHFLAGS) ;
+
+LINKLIBS = -lcomctl32 -lole32 -luuid -lshlwapi ;
+LINKFLAGS = -mwindows -s $(ARCHLINKFLAGS) ;
 
 ################################
 ## rule to create ico object
@@ -19,6 +26,9 @@ rule Resource
   Depends $(<) : $(>) ;
 }
 
+################################
+## common UserObject custom rule
+################################
 rule UserObject
 {
     switch $(>:S)
@@ -32,25 +42,8 @@ rule UserObject
 ################################
 actions Resource
 {
-windres.exe $(>) $(<)
+$(WINDRES) $(>) $(<)
 }
 
-SRC = swnd.c nargv.c res.rc dirwalk.c recent.c mstr.c array.c ini.c config.c search.c mask.c kmem_cache.c save.c elapsed.c shlink.c ;
-
-SEARCH_SOURCE = src res ;
-HDRS = include ;
-
-OPTIM = -O2 ;
-CCFLAGS = -Wall -funsigned-char ;
-LINK = $(CC) ;
-
-LINKLIBS = -lcomctl32 -lole32 -luuid -lshlwapi ;
-LINKFLAGS = -mwindows -static -s -Xlinker --no-insert-timestamp ;
-
-##################
-
-SOURCE = $(SRC) ;
-LOCATE_TARGET = $(LOCATE_TARGET_FOLDER) ;
-
-Main $(OUTFILE) : $(SOURCE) ;
-InstallBin bin : $(OUTFILE) ;
+Main $(OUTFILE) : $(SRC) ;
+InstallBin $(OUTDIR) : $(OUTFILE) ;
