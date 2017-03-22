@@ -59,18 +59,13 @@ else  {
 Echo "Target arch =" $(ARCH) ;
 Echo "------------------------" ;
 
-#AS  = $(CPREFIX)as ;
+AS  = $(CPREFIX)as ;
 CC  = $(CPREFIX)gcc ;
 C++ = $(CPREFIX)g++ ;
 AR  = $(CPREFIX)gcc-ar ru ;
 RANLIB = $(CPREFIX)gcc-ranlib ;
 LINK = $(CC) ;
-if $(NT)  {
-  WINDRES = windres ;
-}
-else  {
-  WINDRES = $(CPREFIX)windres ;
-}
+WINDRES = $(CPREFIX)windres ;
 
 LOCATE_TARGET = obj$(SEP)$(ARCH) ;
 
