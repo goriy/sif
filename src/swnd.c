@@ -601,39 +601,39 @@ NMLISTVIEW *ev;
         }
         break;
 
-  case WM_DROPFILES:
-    fprintf (stderr, "WM_DROPFILES\n");
-    do {
-        //  Now comes the code that retrieves the dropped file's path...
-        //  I guess this is not relevant so you don't struggle understanding it.
-        //  Just know that 'buffer' will store the dropped file's path.
-        HDROP hDrop = (HDROP)wparam;
-        char buffer[MAX_PATH];
-        char *allfiles = NULL;
-        int nFilesDropped = DragQueryFile (hDrop, 0xFFFFFFFF, NULL, MAX_PATH);
+    case WM_DROPFILES:
+      fprintf (stderr, "WM_DROPFILES\n");
+      do {
+          //  Now comes the code that retrieves the dropped file's path...
+          //  I guess this is not relevant so you don't struggle understanding it.
+          //  Just know that 'buffer' will store the dropped file's path.
+          HDROP hDrop = (HDROP)wparam;
+          char buffer[MAX_PATH];
+          char *allfiles = NULL;
+          int nFilesDropped = DragQueryFile (hDrop, 0xFFFFFFFF, NULL, MAX_PATH);
 
-        if (nFilesDropped) {
-          allfiles = malloc (MAX_PATH * nFilesDropped + nFilesDropped * 2);
-          if (allfiles)  {
-            int i, ret;
-            allfiles[0] = 0;
-            for (i = 0; i < nFilesDropped; i++)  {
-              ret = DragQueryFile (hDrop, i, buffer, MAX_PATH);
-              if (ret)  {
-                strcat (allfiles, "\"");
-                strcat (allfiles, buffer);
-                strcat (allfiles, "\"");
-                strcat (allfiles, " ");
+          if (nFilesDropped) {
+            allfiles = malloc (MAX_PATH * nFilesDropped + nFilesDropped * 2);
+            if (allfiles)  {
+              int i, ret;
+              allfiles[0] = 0;
+              for (i = 0; i < nFilesDropped; i++)  {
+                ret = DragQueryFile (hDrop, i, buffer, MAX_PATH);
+                if (ret)  {
+                  strcat (allfiles, "\"");
+                  strcat (allfiles, buffer);
+                  strcat (allfiles, "\"");
+                  strcat (allfiles, " ");
+                }
               }
+              do_gui_main_action (allfiles);
+              //fprintf (stderr, "DROP: %s\n", allfiles);
+              free (allfiles);
             }
-            do_gui_main_action (allfiles);
-            //fprintf (stderr, "DROP: %s\n", allfiles);
-            free (allfiles);
           }
-        }
-        DragFinish (hDrop);
-    } while (0);
-    break;
+          DragFinish (hDrop);
+      } while (0);
+      break;
     default:
         return DefWindowProc(hwnd, msg, wparam, lparam);
     }
