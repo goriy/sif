@@ -67,6 +67,8 @@ HWND  hRTF;
 
 int OnActivateEscape = 0;
 
+int ClickedItem;
+
 char MyPath[_MAX_PATH];
 char ConfigPath[_MAX_PATH];
 char CurrentPath[_MAX_PATH];
@@ -559,12 +561,14 @@ NMLISTVIEW *ev;
         break;
 
     case WM_CLOSE:
+        KillTimer(hMainWindow, IDT_TMR);
         DragAcceptFiles(hwnd, FALSE);
         DestroyWindow(hwnd);
         exit(0);
         break;
 
     case WM_DESTROY:
+        KillTimer(hMainWindow, IDT_TMR);
         PostQuitMessage(0);    // PostQuitMessage(return_code) quits the message loop.
         break;
 
@@ -590,16 +594,28 @@ NMLISTVIEW *ev;
           //printf ("WM_NOTIFY: (code = %d %d %d %d)\n", ev->hdr.code, ev->iItem, ev->uNewState, NM_CLICK);
           if (ev->hdr.code == -2)  {
             if (ev->iItem >= 0)  {
-              on_results_click (ev->iItem);
+              //ClickedItem = ev->iItem;
+              //fprintf (stderr, "HDR=2: item=%d\n", ev->iItem);
+              //on_results_click (ev->iItem);
+              //SetTimer(hMainWindow, IDT_TMR, 35, NULL);
             }
           }
           else if (ev->hdr.code == LVN_ITEMCHANGED)  {
             if (ev->iItem >= 0)  {
-              on_results_click (ev->iItem);
+              //fprintf (stderr, "ITEM_CHANGED: item=%d\n", ev->iItem);
+              ClickedItem = ev->iItem;
+              //on_results_click (ev->iItem);
+              SetTimer(hMainWindow, IDT_TMR, 35, NULL);
             }
           }
         }
         break;
+
+    case WM_TIMER:
+      KillTimer(hMainWindow, IDT_TMR);
+      on_results_click (ClickedItem);
+      fprintf (stderr, "TIMER: item=%d\n", ClickedItem);
+      break;
 
     case WM_DROPFILES:
       fprintf (stderr, "WM_DROPFILES\n");

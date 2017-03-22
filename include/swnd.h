@@ -35,6 +35,8 @@
 #define IDC_FONT      2024
 #define IDC_SENCODING 2025
 
+#define IDT_TMR       2026
+
 extern HWND  hMainWindow;
 extern HWND  hResult;
 extern HWND  hRTF;
