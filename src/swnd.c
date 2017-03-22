@@ -32,6 +32,7 @@
 #include "search.h"
 #include "save.h"
 #include "shlink.h"
+#include <tchar.h>
 
 void text_append (const char *fmt, ...);
 void text_set    (const char *txt);
@@ -796,10 +797,10 @@ void create_wnd_content0(HWND parent)
     hStatus = wnd;
 
     //LoadLibrary(TEXT("riched32.dll"));
-    LoadLibrary(TEXT("riched20.dll"));
-    //LoadLibrary(TEXT("Msftedit.dll"));
+    //LoadLibrary(TEXT("riched20.dll"));
+    LoadLibrary(TEXT("msftedit.dll"));
 
-    wnd = CreateWindowEx(WS_EX_CLIENTEDGE, RICHEDIT_CLASS, "",
+    wnd = CreateWindowEx(WS_EX_CLIENTEDGE, _T("RICHEDIT50W"), "",
         WS_VISIBLE | WS_CHILD | WS_VSCROLL | WS_HSCROLL |
         ES_MULTILINE/* | ES_NOHIDESEL*/ | ES_WANTRETURN | ES_DISABLENOSCROLL | ES_SELECTIONBAR,
         270, 0, 402, 282,
