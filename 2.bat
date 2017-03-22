@@ -1,1 +1,1 @@
-obj32\sif2
+obj\win32\sif2
