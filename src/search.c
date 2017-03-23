@@ -84,6 +84,7 @@ static void result_add (char *filename, int row, int col, unsigned long offset,
 static void result_add (found_file_t *file, found_result_t *result, const wchar_t *text, int text_len);
 
 static ELAPSED Elapsed;
+static unsigned long long SearchBytesCounter = 0ULL;
 
 /******************************************************************************/
 static void que_delete_all (que_t *q, kmem_cache_t *cache)
@@ -109,7 +110,7 @@ found_file_t *ff;
     que_delete_all (&ff->results, &ResCache);
   }
   que_delete_all (&AllFiles, &FileCache);
-
+  SearchBytesCounter = 0ULL;
 }
 
 /******************************************************************************/
@@ -200,6 +201,7 @@ int tmp;
   }
 
   loaded_len = fread (fbuf, sizeof(unsigned char), FBUF_SIZE-1, in);
+  SearchBytesCounter += loaded_len;
   fbuf[loaded_len] = 0;
   fbuf[FBUF_SIZE-1] = 0;
   fclose (in);
@@ -424,6 +426,52 @@ static int dcallback(const char *path, char *name, struct _finddata_t *f, int de
 }
 
 /******************************************************************************/
+#define BBBSIZE  64
+static char *print_bytes_buffer (void)
+{
+static int  bbbufcnt = 0;
+static char bbbuf[8][BBBSIZE];
+  bbbufcnt++;
+  bbbufcnt &= 7;
+  return bbbuf[bbbufcnt];
+}
+
+/******************************************************************************/
+static const char *print_bytes(void)
+{
+  char *s = print_bytes_buffer();
+  int rem;
+
+  if (SearchBytesCounter < 2048)  {
+    snprintf(s, BBBSIZE, "%d bytes", (unsigned int)SearchBytesCounter);
+  }
+  else if (SearchBytesCounter < (2048ULL*1024ULL)) {
+    rem = SearchBytesCounter & 1023;
+    rem *= 10;
+    rem >>= 10;
+    SearchBytesCounter >>= 10;
+    snprintf(s, BBBSIZE, "%d.%d kb", (unsigned int)SearchBytesCounter, rem);
+  }
+  else if (SearchBytesCounter < (2048ULL*1024*1024)) {
+    SearchBytesCounter >>= 10;
+    rem = SearchBytesCounter & 1023;
+    rem *= 10;
+    rem >>= 10;
+    SearchBytesCounter >>= 10;
+    snprintf(s, BBBSIZE, "%d.%d Mb", (unsigned int)SearchBytesCounter, rem);
+  }
+  else  {
+    SearchBytesCounter >>= 20;
+    rem = SearchBytesCounter & 1023;
+    rem *= 10;
+    rem >>= 10;
+    SearchBytesCounter >>= 10;
+    snprintf(s, BBBSIZE, "%d.%d Gb", (unsigned int)SearchBytesCounter, rem);
+  }
+  return s;
+}
+
+/******************************************************************************/
 void search_in_path (char *lookfor, const char *path, const char *mask)
 {
   if (search_in_progress)  return;
@@ -464,9 +512,14 @@ void search_in_path (char *lookfor, const char *path, const char *mask)
   }
 
   #if WITH_ALLOC_COUNT
-  status_bar (1, "Found: %d %s (%ld %ld)", FoundEntries, elapsed_result(&Elapsed), FileCache.allocated, ResCache.allocated);
+  status_bar (1, "Found: %d %s (%ld %ld) (%s)",
+                                        FoundEntries,
+                                        elapsed_result(&Elapsed),
+                                        FileCache.allocated,
+                                        ResCache.allocated,
+                                        print_bytes());
   #else
-  status_bar (1, "Found: %d %s", FoundEntries, elapsed_result(&Elapsed));
+  status_bar (1, "Found: %d %s (%s)", FoundEntries, elapsed_result(&Elapsed), print_bytes());
   #endif
   search_in_progress = 0;
 }
@@ -679,14 +732,14 @@ static char tbuf[LINE_LEN*2];
     ListView_SetItemText (wnd, index, 3, file->name);
   }
   else  {
-    snprintf (buf + i, sizeof(buf) - i, "(line %d, col %d):", result->line, result->column);
+    snprintf (buf + i, sizeof(buf) - i, "(line %Iu, col %Iu):", result->line, result->column);
     ListView_SetItemText (wnd, index, 0, buf);
 
     i = WideCharToMultiByte (CP_ACP, WC_NO_BEST_FIT_CHARS, text, text_len, tbuf, sizeof(tbuf)-1, "?", NULL);
     tbuf[i] = 0;
     ListView_SetItemText (wnd, index, 1, tbuf);
 
-    snprintf (buf, sizeof(buf), "%u", result->offset);
+    snprintf (buf, sizeof(buf), "%Iu", result->offset);
     ListView_SetItemText (wnd, index, 2, buf);
     ListView_SetItemText (wnd, index, 3, file->name);
   }
