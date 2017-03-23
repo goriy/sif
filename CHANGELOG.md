@@ -7,6 +7,8 @@
 * skipped too frequent file preview refresh/redraw when choosing search results.
   Too frequent file preview redraws (on every event from search results, 
   for example) led to undesired flicker (especially on slow PC).
+* do not preview files during search procedure.
+* added overall searched bytes counter to status bar.
 
 **Internal:**
 
