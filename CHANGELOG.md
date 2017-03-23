@@ -2,6 +2,17 @@
 
 ## [2.0-rc6](https://github.com/goriy/sif/releases/tag/v.2.0-rc6) (not released yet)
 
+**Improvements:**
+
+* skipped too frequent file preview refresh/redraw when choosing search results.
+  Too frequent file preview redraws (on every event from search results, 
+  for example) led to undesired flicker (especially on slow PC).
+
+**Internal:**
+
+* cross-compilation support (can be compiled by mingw under Linux)
+
+
 ## [2.0-rc5](https://github.com/goriy/sif/releases/tag/v.2.0-rc5) (2016-12-05)
 
 [Full Changelog](https://github.com/goriy/sif/compare/v.2.0-rc4...v.2.0-rc5)
