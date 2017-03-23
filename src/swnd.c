@@ -590,13 +590,12 @@ NMLISTVIEW *ev;
         return FALSE;
     case WM_NOTIFY:
         ev = (NMLISTVIEW *)lparam;
-        if (ev->hdr.idFrom == IDC_LISTVIEW0)  {
+        if ((ev->hdr.idFrom == IDC_LISTVIEW0) && (!search_is_in_progress()))  {
           //printf ("WM_NOTIFY: (code = %d %d %d %d)\n", ev->hdr.code, ev->iItem, ev->uNewState, NM_CLICK);
           if (ev->hdr.code == -2)  {
             if (ev->iItem >= 0)  {
+              ////fprintf (stderr, "HDR=2: item=%d\n", ev->iItem);
               //ClickedItem = ev->iItem;
-              //fprintf (stderr, "HDR=2: item=%d\n", ev->iItem);
-              //on_results_click (ev->iItem);
               //SetTimer(hMainWindow, IDT_TMR, 35, NULL);
             }
           }
@@ -604,7 +603,6 @@ NMLISTVIEW *ev;
             if (ev->iItem >= 0)  {
               //fprintf (stderr, "ITEM_CHANGED: item=%d\n", ev->iItem);
               ClickedItem = ev->iItem;
-              //on_results_click (ev->iItem);
               SetTimer(hMainWindow, IDT_TMR, 35, NULL);
             }
           }
