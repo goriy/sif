@@ -44,7 +44,7 @@ Compiler version used:
 
 More direct links are -
 [HERE i686](http://sourceforge.net/projects/mingw-w64/files/Toolchains%20targetting%20Win32/Personal%20Builds/mingw-builds/6.2.0/threads-posix/dwarf/)
-and 
+and
 [HERE x86_64](http://sourceforge.net/projects/mingw-w64/files/Toolchains%20targetting%20Win64/Personal%20Builds/mingw-builds/6.2.0/threads-posix/seh/)
 or you can use their official installer.
 
@@ -56,6 +56,8 @@ Program can be built by *jam* build system:
 
 It's not necessary to use *jam* as a build system, but in case you will
 you should also add path to *jam.exe* to system *PATH* environment variable.
+
+Alternatively, project could be built by means of [CMake](https://cmake.org) build system.
 
 ### Build program
 
