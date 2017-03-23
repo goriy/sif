@@ -3,7 +3,7 @@
 OUTFILE_BASE = sif2 ;
 OUTDIR ?= bin ;
 SUBDIR ?= . ;
-BITS64_SEP = _ ;
+BITS64_SEP = _x ;
 
 include $(SUBDIR)/Jam.toolchain ;
 
