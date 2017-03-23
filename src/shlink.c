@@ -101,6 +101,7 @@
           iWideCharsWritten = MultiByteToWideChar(CP_ACP, 0,
                                                pszLinkfile, -1,
                                                wszLinkfile, MAX_PATH);
+          (void)iWideCharsWritten;
           hRes = pPersistFile->lpVtbl->Save(pPersistFile,
                                                    wszLinkfile, TRUE);
           pPersistFile->lpVtbl->Release(pPersistFile);
