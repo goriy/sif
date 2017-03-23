@@ -14,6 +14,7 @@ extern int  loaded_flags;
 void search_init (void);
 void search_clear (void);
 void search_destroy (void);
+int  search_is_in_progress (void);
 
 void search_in_path (char *lookfor, const char *path, const char *mask);
 

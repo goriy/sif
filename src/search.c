@@ -69,6 +69,7 @@ typedef struct found_result_t  {
 //  char     text[LINE_LEN];
 } found_result_t;
 
+static int search_in_progress = 0;
 
 kmem_cache_t FileCache = KMEM_CACHE_INITIALIZER(sizeof(found_file_t),200);
 kmem_cache_t ResCache  = KMEM_CACHE_INITIALIZER(sizeof(found_result_t),300);
@@ -117,6 +118,12 @@ void search_destroy (void)
   search_clear ();
   kmem_cache_purge (&FileCache);
   kmem_cache_purge (&ResCache);
+}
+
+/******************************************************************************/
+int search_is_in_progress (void)
+{
+  return search_in_progress;
 }
 
 /******************************************************************************/
@@ -419,8 +426,6 @@ static int dcallback(const char *path, char *name, struct _finddata_t *f, int de
 /******************************************************************************/
 void search_in_path (char *lookfor, const char *path, const char *mask)
 {
-static int search_in_progress = 0;
-
   if (search_in_progress)  return;
 
   search_in_progress = 1;
