@@ -4,6 +4,8 @@
 
 **Improvements:**
 
+* added line numbers to file preview box
+
 **Fixed bugs:**
 
 
