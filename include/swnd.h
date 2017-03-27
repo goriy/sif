@@ -37,6 +37,8 @@
 
 #define IDT_TMR       2026
 
+#define IDC_LN        2027
+
 extern HWND  hMainWindow;
 extern HWND  hResult;
 extern HWND  hRTF;
@@ -54,5 +56,7 @@ void do_events (void);
 void status_bar (int part, const char *fmt, ...);
 void msgbox (const char *fmt, ...);
 BOOL DirectoryExists(LPCTSTR szPath);
+
+void fill_ln (void);
 
 #endif

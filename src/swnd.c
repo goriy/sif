@@ -64,17 +64,19 @@ HWND  hStatus;
 HWND  hDlgCurrent = NULL;
 HWND  hResult;
 HWND  hRTF;
+HWND  hLN;
 
 int OnActivateEscape = 0;
 
 int ClickedItem;
+
+LONG LNWidth = 0;
 
 char MyPath[_MAX_PATH];
 char ConfigPath[_MAX_PATH];
 char CurrentPath[_MAX_PATH];
 static char SendtoPath[_MAX_PATH];
 
-void set_rtf_font (void);
 void populate_dir (void);
 
 /******************************************************************************/
@@ -244,6 +246,20 @@ int WINAPI WinMain(HINSTANCE hinstance, HINSTANCE hprevinst, LPSTR cmdline, int 
 }
 
 /******************************************************************************/
+static void calc_ln_width (void)
+{
+  HDC hdc = GetDC(hLN);
+
+  SelectObject(hdc, h_font_code);
+  RECT r = {0, 0, 0, 0};
+
+  DrawText(hdc, "88888888:", 9, &r, DT_CALCRECT | DT_NOPREFIX | DT_SINGLELINE);
+  ReleaseDC(hLN, hdc);
+  LNWidth = abs(r.right - r.left);
+  status_bar (0, "LNW=%ld", LNWidth);
+}
+
+/******************************************************************************/
 static void on_font_click (void)
 {
 CHOOSEFONT fnt;
@@ -277,11 +293,18 @@ CHOOSEFONT fnt;
     config_save ();
     clfnt.lfHeight = -MulDiv(OptFontHeight, GetDeviceCaps(GetDC(hMainWindow), LOGPIXELSY), 72);
     status_bar (0, "%d", clfnt.lfHeight);
+    DeleteObject(h_font_code);
+    h_font_code = CreateFontIndirect(&clfnt);
+
     ListView_DeleteAllItems (hResult);
     SendMessage(hResult, WM_SETFONT, (WPARAM) h_font_code, TRUE);
     SendMessage(hRTF   , WM_SETFONT, (WPARAM) h_font_code, TRUE);
+    SendMessage(hLN    , WM_SETFONT, (WPARAM) h_font_code, TRUE);
     UpdateWindow (hResult);
     UpdateWindow (hRTF);
+    UpdateWindow (hLN);
+    calc_ln_width();
+    resize_controls();
   }
 }
 
@@ -467,6 +490,26 @@ LRESULT CALLBACK mask_input_proc(HWND wnd, UINT msg, WPARAM wParam, LPARAM lPara
    }
    return 0;
 }
+
+/******************************************************************************/
+WNDPROC oldrtfProc;
+
+LRESULT CALLBACK rtf_input_proc(HWND wnd, UINT msg, WPARAM wParam, LPARAM lParam)
+{
+  switch (msg)  {
+    case WM_PAINT:
+    //case WM_VSCROLL:
+    //case WM_MOUSEWHEEL:
+      fill_ln();
+      //printf ("msg = scroll %X %X\n", wParam, lParam);
+      return CallWindowProc(oldrtfProc, wnd, msg, wParam, lParam);
+    default:
+      //printf ("msg = 0x%X %X %X\n", msg, wParam, lParam);
+      return CallWindowProc(oldrtfProc, wnd, msg, wParam, lParam);
+   }
+   return 0;
+}
+
 
 /******************************************************************************/
 // window procedure #0 [Search in files ].
@@ -655,28 +698,6 @@ NMLISTVIEW *ev;
 }
 
 /******************************************************************************/
-void set_rtf_font (void)
-{
-#if 0
-HWND wnd = GetDlgItem(hMainWindow, IDC_RTF);
-CHARFORMAT cf = {0};
-CHARRANGE cr;
-
-  //SendMessage(wnd, WM_SETFONT, (WPARAM) h_font_code, TRUE);
-  cf.dwMask = CFM_FACE + CFM_SIZE;
-  cf.yHeight = (14*1440)/72;
-  cf.bCharSet = ANSI_CHARSET;
-  cf.bPitchAndFamily = DEFAULT_PITCH | FF_MODERN;
-  strcpy (cf.szFaceName, "Courier New Cyr");
-  //SendMessage(wnd, EM_SETCHARFORMAT, (WPARAM)(SCF_ALL), (LPARAM)&cf);
-
-  cr.cpMin = 0;
-  cr.cpMax = INT_MAX;
-  //SendMessage(wnd, EM_EXSETSEL, 0, (LPARAM)&cr);
-#endif
-}
-
-/******************************************************************************/
 // create window #0 [Search in files ].
 HWND create_wnd0()
 {
@@ -822,8 +843,16 @@ void create_wnd_content0(HWND parent)
 
     SendMessage(wnd, WM_SETFONT, (WPARAM) h_font_code, TRUE);
     hRTF = wnd;
-    set_rtf_font ();
     Edit_LimitText (wnd, -1);
+    SendMessage(wnd, EM_SETMARGINS, (WPARAM)EC_LEFTMARGIN, 0);
+    oldrtfProc = (WNDPROC)SetWindowLongPtr(hRTF, GWLP_WNDPROC, (LONG_PTR)rtf_input_proc);
+
+    wnd = CreateWindowEx(0x00000200, "Edit", "", 0x50000000 | ES_RIGHT | ES_READONLY | ES_MULTILINE /* | WS_VSCROLL*/
+    , 270, 0, 84, 282, parent, (HMENU) IDC_LN, instance, NULL);
+    SendMessage(wnd, WM_SETFONT, (WPARAM) h_font_code, TRUE);
+    hLN = wnd;
+    calc_ln_width();
+//    Edit_SetReadOnly (hLN, TRUE);
 }
 
 /******************************************************************************/
@@ -953,7 +982,7 @@ static void resize_controls (void)
 LONG wWidth, wHeight;
 RECT MainWindowRect;
 
-dim_t wh[22];
+dim_t wh[23];
 
     GetWindowRect(hMainWindow, &MainWindowRect);
     wWidth  = MainWindowRect.right  - MainWindowRect.left;
@@ -983,6 +1012,7 @@ dim_t wh[22];
     HWND slf  = get_control_size (IDC_SAVELF, &wh[5]);
     HWND fnt  = get_control_size (IDC_FONT, &wh[20]);
     HWND senc = get_control_size (IDC_SENCODING, &wh[21]);
+    HWND ln   = get_control_size (IDC_LN, &wh[22]);
 
     HWND srch[6];
     srch[0] = get_control_size (IDC_CASE, &wh[6]);
@@ -1013,7 +1043,8 @@ dim_t wh[22];
 
     #define HCOEFF  1.8
 
-    move_win (rtf, &wh[0], 280, 0, wWidth - 280, h/HCOEFF, TRUE);
+    move_win (ln, &wh[22], 280, 0, LNWidth, h/HCOEFF, TRUE);
+    move_win (rtf, &wh[0], 280+LNWidth-2, 0, wWidth - 280 - LNWidth+2, h/HCOEFF, TRUE);
     ih -= h/HCOEFF;
     y  += h/HCOEFF;
 
@@ -1021,7 +1052,7 @@ dim_t wh[22];
     move_win (slf,   &wh[5], -1, y + wh[4].height * 0.1, -1, -1, TRUE);
     move_win (lfind, &wh[18],-1, y + wh[4].height * 0.1, -1, -1, TRUE);
     move_win (fnt,   &wh[20],-1, y + wh[4].height * 0.1, -1, -1, TRUE);
-    move_win (senc,   &wh[21],-1, y + wh[4].height * 0.1, -1, -1, TRUE);
+    move_win (senc,  &wh[21],-1, y + wh[4].height * 0.1, -1, -1, TRUE);
 
     move_win (fls[0], &wh[12], -1, y + button_height/2 - wh[12].height/2, -1, -1, TRUE);
     move_win (fls[1], &wh[13], -1, y + button_height/2 - wh[13].height/2, -1, -1, TRUE);
@@ -1085,10 +1116,63 @@ HWND rtf = hRTF;
 }
 
 /******************************************************************************/
+void fill_ln (void)
+{
+char buf[16];
+unsigned long i;
+
+unsigned long  line1, line2, char1, char2;
+POINTL pt = {.x = 0, .y = 0};
+POINTL ptn = {.x = 0, .y = 0};
+RECT r;
+
+    if (GetWindowTextLength(hRTF) < 1)  {
+      SetWindowText(hLN, "");
+      return;
+    }
+
+    GetClientRect(hRTF, &r);
+    char1 = SendMessage(hRTF, EM_CHARFROMPOS, 0, (LPARAM)&pt);
+    SendMessage(hRTF, EM_POSFROMCHAR, (LPARAM)&ptn, char1);
+    //fprintf(stderr, "y=%ld\n", ptn.y);
+
+    line1 = SendMessage(hRTF, EM_EXLINEFROMCHAR, 0, (LPARAM)char1);
+
+    pt.y = r.bottom-1;
+    char2 = SendMessage(hRTF, EM_CHARFROMPOS, 0, (LPARAM)&pt);
+    line2 = SendMessage(hRTF, EM_EXLINEFROMCHAR, 0, (LPARAM)char2);
+
+    SendMessage(hLN, WM_SETREDRAW, 0, 0);
+    int eventMask = SendMessage(hLN, EM_SETEVENTMASK, 0, 0);
+
+    SetWindowText(hLN, "");
+    for (i = line1; i <= line2; i++)  {
+      snprintf (buf, sizeof(buf), "%ld:\r\n", i+1);
+      SendMessage(hLN, EM_SETSEL, -1, -1);
+      SendMessage(hLN, EM_REPLACESEL, 0, (LPARAM)buf);
+    }
+    SendMessage(hLN, EM_SETSEL, -1, -1);
+    SendMessage(hLN, EM_REPLACESEL, 0, (LPARAM)"\r\n\r\n");
+
+    dim_t d;
+
+    get_control_size (IDC_LN, &d);
+    d.top = ptn.y - 2;
+    d.height = d.bottom - d.top;
+    move_win (hLN, &d, -1, -1, -1, -1, TRUE);
+
+    SendMessage(hLN, EM_SETEVENTMASK, 0, eventMask);
+    SendMessage(hLN, WM_SETREDRAW, 1, 0);
+    //RedrawWindow(hLN, NULL, NULL, RDW_ERASE | RDW_FRAME | RDW_INVALIDATE | RDW_ALLCHILDREN);
+    UpdateWindow (hLN);
+}
+
+/******************************************************************************/
 void text_set (const char *txt)
 {
 HWND rtf = hRTF;
   Edit_SetText (rtf, txt);
+  fill_ln ();
 }
 
 /******************************************************************************/
