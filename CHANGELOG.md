@@ -1,5 +1,14 @@
 # Change Log
 
+## [2.0-rc8](https://github.com/goriy/sif/releases/tag/v.2.0-rc8) (Not released yet)
+
+**Improvements:**
+
+**Fixed bugs:**
+
+**Internal:**
+
+
 ## [2.0-rc7](https://github.com/goriy/sif/releases/tag/v.2.0-rc7) (2017-06-11)
 
 **Improvements:**
