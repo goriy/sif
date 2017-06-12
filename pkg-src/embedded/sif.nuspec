@@ -1,0 +1,62 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
+  <metadata>
+    <!-- == PACKAGE SPECIFIC SECTION == -->
+    <id>sif</id>
+    <version>2.0-rc7</version>
+    <packageSourceUrl>https://github.com/goriy/sif/tree/master/pkg-src</packageSourceUrl>
+    <owners>goriy</owners>
+    <!-- ============================== -->
+
+    <!-- == SOFTWARE SPECIFIC SECTION == -->
+    <title>sif (Portable)</title>
+    <authors>goriy</authors>
+    <projectUrl>https://github.com/goriy/sif</projectUrl>
+    <iconUrl>https://cdn.rawgit.com/goriy/sif/tag/v.2.0-rc7/res/sif2.png</iconUrl>
+    <copyright>2015 - 2017, goriy</copyright>
+    <licenseUrl>https://cdn.rawgit.com/goriy/sif/tag/v.2.0-rc7/LICENSE</licenseUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <projectSourceUrl>https://github.com/goriy/sif</projectSourceUrl>
+    <!--<docsUrl>At what url are the software docs located?</docsUrl>-->
+    <!--<mailingListUrl></mailingListUrl>-->
+    <!--<bugTrackerUrl></bugTrackerUrl>-->
+    <tags>sif admin portable search winapi windows</tags>
+    <summary>search text in files</summary>
+<description>
+# Search In Files
+
+## Description
+
+This small tool is intended to search text in multiple files.
+Search results are not only file name, line and column numbers,
+but additionally the whole line from file.
+
+Click on search result loads whole file into edit control with highlight
+of found text.
+Text could be edited and saved right there.
+
+This tool understands both cp1251 and utf-8 text encodings and
+both CRLF and LF line endings.
+It supports command line argument and path/file drag'n'drop.
+It automatically creates shortcut in SendTo folder to simplify
+its usage from windows explorer.
+
+It works on Windows platform (XP, Vista, 7).
+Also it should work on Windows 2000 and Windows 8-10, but such case
+has not been tested yet.
+
+This tool is written in C programming language with no "bold"
+framework (MFC, .NET, ...) involved. Raw WinAPI only.
+Due to this it has small size, it has no complex dependencies and thus it can work
+without any installation procedures (other than simple exe-file copy).
+
+No administrative priviledges  required.
+
+</description>
+  <provides>sif</provides>
+  </metadata>
+  <files>
+    <file src="tools\**" target="tools" />
+  </files>
+</package>

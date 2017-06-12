@@ -1,0 +1,18 @@
+﻿VERIFICATION
+Verification is intended to assist the Chocolatey moderators and community
+in verifying that this package's contents are trustworthy.
+
+1. Go to https://github.com/goriy/sif/releases, scroll down to release
+   of version 2.0-rc7 and download binary zip files:
+
+   x32: sif2.zip
+   x64: sif2_x64.zip
+
+2. You can use one of the following methods to obtain the SHA256 checksum:
+   - Use powershell function 'Get-FileHash'
+   - Use Chocolatey utility 'checksum.exe'
+   - Use utility sha256sum
+   - Use utility sha256deep
+
+   checksum32: E563A26417455102D5C71F0052D64DAC035AD668795FA329285703D04F53196E
+   checksum64: B77EB86D8CBEA924463CDDD953773302C21AAAACD0E374BCA6577F24B5F6BD0B
