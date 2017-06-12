@@ -21,7 +21,7 @@
     <!--<docsUrl>At what url are the software docs located?</docsUrl>-->
     <!--<mailingListUrl></mailingListUrl>-->
     <!--<bugTrackerUrl></bugTrackerUrl>-->
-    <tags>sif admin portable search winapi windows</tags>
+    <tags>sif portable search winapi windows</tags>
     <summary>search text in files</summary>
 <description>
 Search in files (sif) is a small tool which is intended to search text in multiple files.
