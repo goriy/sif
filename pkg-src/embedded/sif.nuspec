@@ -50,6 +50,7 @@ without any installation procedures (other than simple exe-file copy).
 No administrative priviledges are required.
 
 </description>
+<releaseNotes>https://cdn.rawgit.com/goriy/sif/v.2.0-rc7/CHANGELOG.md</releaseNotes>
   <provides>sif</provides>
   </metadata>
   <files>
