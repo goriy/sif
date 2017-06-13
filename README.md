@@ -27,6 +27,10 @@ without any installation procedures (other than simple exe-file copy).
 
 No administrative priviledges are required.
 
+Alternatively it could be installed by means of
+[Chocolatey package manager](https://chocolatey.org/packages/sif)
+as a portable app.
+
 ## How to build
 
 ### Tools used
