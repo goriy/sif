@@ -6,6 +6,8 @@
 
 **Fixed bugs:**
 
+* unsupported yet checkbox "Re" (for regex search) is in disabled state
+
 **Internal:**
 
 * fixed some chocolatey package Guidelines

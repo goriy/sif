@@ -764,6 +764,8 @@ void create_wnd_content0(HWND parent)
     SendMessage(wnd, WM_SETFONT, (WPARAM) h_font, TRUE);
     wnd = CreateWindowEx(0x00000000, "Button", "R&e", 0x50010003, 60, 300, 48, 14, parent, (HMENU) IDC_RE, instance, NULL);
     SendMessage(wnd, WM_SETFONT, (WPARAM) h_font, TRUE);
+    Button_Enable (wnd, 0);
+
     wnd = CreateWindowEx(0x00000000, "Static", "Search text:", 0x50000302, 100, 296, 64, 24, parent, (HMENU) IDC_STATIC0, instance, NULL);
     SendMessage(wnd, WM_SETFONT, (WPARAM) h_font, TRUE);
     wnd = CreateWindowEx(0x00000000, "Button", "&Case", 0x50010003, 4, 300, 52, 14, parent, (HMENU) IDC_CASE, instance, NULL);
