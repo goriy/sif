@@ -12,6 +12,8 @@
 
 ## [2.0-rc7](https://github.com/goriy/sif/releases/tag/v.2.0-rc7) (2017-06-11)
 
+[Full Changelog](https://github.com/goriy/sif/compare/v.2.0-rc6...v.2.0-rc7)
+
 **Improvements:**
 
 * added line numbers to file preview box
