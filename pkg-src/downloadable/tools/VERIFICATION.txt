@@ -3,7 +3,7 @@ Verification is intended to assist the Chocolatey moderators and community
 in verifying that this package's contents are trustworthy.
 
 1. Go to https://github.com/goriy/sif/releases, scroll down to release
-   of version 2.0-rc7 and download binary zip files:
+   of version 2.0-rc8 and download binary zip files:
 
    x32: sif2.zip
    x64: sif2_x64.zip
@@ -14,5 +14,5 @@ in verifying that this package's contents are trustworthy.
    - Use utility sha256sum
    - Use utility sha256deep
 
-   checksum32: E563A26417455102D5C71F0052D64DAC035AD668795FA329285703D04F53196E
-   checksum64: B77EB86D8CBEA924463CDDD953773302C21AAAACD0E374BCA6577F24B5F6BD0B
+   checksum32: CDD37A2D50792014ECD4B655D9762008CC208413E0ED1FBA5C82E55C04618156
+   checksum64: F8FE76D9EB4440C0B450D6616DE14944466B2CEEF7CA05237679E8131DE317E3

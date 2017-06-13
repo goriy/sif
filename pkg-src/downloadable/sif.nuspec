@@ -4,7 +4,7 @@
   <metadata>
     <!-- == PACKAGE SPECIFIC SECTION == -->
     <id>sif</id>
-    <version>2.0-rc7</version>
+    <version>2.0-rc8</version>
     <packageSourceUrl>https://github.com/goriy/sif/tree/master/pkg-src</packageSourceUrl>
     <owners>goriy</owners>
     <!-- ============================== -->
@@ -13,9 +13,9 @@
     <title>Search In Files (Portable)</title>
     <authors>goriy</authors>
     <projectUrl>https://github.com/goriy/sif</projectUrl>
-    <iconUrl>https://cdn.rawgit.com/goriy/sif/v.2.0-rc7/res/sif2.png</iconUrl>
+    <iconUrl>https://cdn.rawgit.com/goriy/sif/v.2.0-rc8/res/sif2.png</iconUrl>
     <copyright>2015 - 2017, goriy</copyright>
-    <licenseUrl>https://cdn.rawgit.com/goriy/sif/v.2.0-rc7/LICENSE</licenseUrl>
+    <licenseUrl>https://cdn.rawgit.com/goriy/sif/v.2.0-rc8/LICENSE</licenseUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <projectSourceUrl>https://github.com/goriy/sif</projectSourceUrl>
     <!--<docsUrl>At what url are the software docs located?</docsUrl>-->
@@ -50,7 +50,7 @@ without any installation procedures (other than simple exe-file copy).
 No administrative priviledges are required.
 
 </description>
-<releaseNotes>https://cdn.rawgit.com/goriy/sif/v.2.0-rc7/CHANGELOG.md</releaseNotes>
+<releaseNotes>https://cdn.rawgit.com/goriy/sif/v.2.0-rc8/CHANGELOG.md</releaseNotes>
   <provides>sif</provides>
   </metadata>
   <files>
