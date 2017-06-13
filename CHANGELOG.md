@@ -8,6 +8,7 @@
 
 **Internal:**
 
+* fixed some chocolatey package Guidelines
 
 ## [2.0-rc7](https://github.com/goriy/sif/releases/tag/v.2.0-rc7) (2017-06-11)
 
