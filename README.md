@@ -12,9 +12,14 @@ Text could be edited and saved right there.
 
 This tool understands both cp1251 and utf-8 text encodings and
 both CRLF and LF line endings.
-It supports command line argument and path/file drag'n'drop.
-It automatically creates shortcut in SendTo folder to simplify
-its usage from windows explorer.
+
+Initial path where program begin to work can be set in
+different ways:
+
+* It supports command line argument
+* Folder can be drag'n'dropped into main window
+* From Explorer folder could be "SendTo" to "Search in files"
+  (Program automatically creates shortcut in SendTo folder)
 
 It works on Windows platform (XP, Vista, 7).
 Also it should work on Windows 2000, Windows 8, Windows 10, but such cases
@@ -30,6 +35,15 @@ No administrative priviledges are required.
 Alternatively it could be installed by means of
 [Chocolatey package manager](https://chocolatey.org/packages/sif)
 as a portable app.
+
+![animated screenshot](sif-demo1.gif)
+
+## Hotkeys
+
+* ENTER - start search
+* ESC - close program
+* UP and DOWN arrows navigate through search history backward and forward
+  (when cursor is in "Search text" field)
 
 ## How to build
 
