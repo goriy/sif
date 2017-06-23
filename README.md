@@ -1,5 +1,7 @@
 # Search In Files
 
+![animated screenshot](sif-demo1.gif)
+
 ## Description
 
 This small tool is intended to search text in multiple files.
@@ -35,8 +37,6 @@ No administrative priviledges are required.
 Alternatively it could be installed by means of
 [Chocolatey package manager](https://chocolatey.org/packages/sif)
 as a portable app.
-
-![animated screenshot](sif-demo1.gif)
 
 ## Hotkeys
 
