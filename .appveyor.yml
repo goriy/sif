@@ -1,0 +1,30 @@
+version: 2.0.{build}
+
+# select image with MinGW-w64 available
+image: Visual Studio 2015
+
+clone_folder: c:\projects\sif
+
+environment:
+
+  global:
+    PATH:   C:\mingw-w64\i686-5.3.0-posix-dwarf-rt_v4-rev0\mingw32\bin;C:\msys64\usr\bin;$(PATH)
+    CXX:    g++
+    CC:     gcc
+    GCOV:   gcov
+    MAKE:   make
+
+install:
+  # show all env vars
+  #- set
+  # display available tools
+  - '%CC% --version'
+  - pwd
+
+build_script:
+  - cmd /c build_all.bat
+
+artifacts:
+- path: obj32\*.exe
+  name: built sif2
+

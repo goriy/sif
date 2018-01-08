@@ -1,3 +1,5 @@
+[![Build status](https://ci.appveyor.com/api/projects/status/1wnq30a39o3cpn1q/branch/master?svg=true)](https://ci.appveyor.com/project/goriy/sif/branch/master)
+
 # Search In Files
 
 ![animated screenshot](sif-demo1.gif)
