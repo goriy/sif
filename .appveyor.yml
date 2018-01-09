@@ -3,8 +3,6 @@ version: 2.0.{build}
 # select image with MinGW-w64 available
 image: Visual Studio 2013
 
-clone_folder: c:\projects\sif
-
 environment:
 
   global:
@@ -15,9 +13,8 @@ environment:
     MAKE:   make
 
 install:
-  # show all env vars
-  #- set
-  # display available tools
+  # show PATH env var
+  #- echo %PATH%
   - '%CC% --version'
   - pwd
 
