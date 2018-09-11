@@ -496,20 +496,28 @@ WNDPROC oldrtfProc;
 
 LRESULT CALLBACK rtf_input_proc(HWND wnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
+  int fwd = 1;
   switch (msg)  {
+    case EM_CHARFROMPOS:
+      //fwd = 0;
+      break;
     case WM_PAINT:
     //case WM_VSCROLL:
     //case WM_MOUSEWHEEL:
       fill_ln();
       //printf ("msg = scroll %X %X\n", wParam, lParam);
-      return CallWindowProc(oldrtfProc, wnd, msg, wParam, lParam);
+      break;
     default:
       //printf ("msg = 0x%X %X %X\n", msg, wParam, lParam);
-      return CallWindowProc(oldrtfProc, wnd, msg, wParam, lParam);
+      break;
    }
-   return 0;
+   if (fwd)  {
+     return CallWindowProc(oldrtfProc, wnd, msg, wParam, lParam);
+   }
+   else  {
+     return 0;
+   }
 }
-
 
 /******************************************************************************/
 // window procedure #0 [Search in files ].
@@ -1120,7 +1128,7 @@ HWND rtf = hRTF;
 /******************************************************************************/
 void fill_ln (void)
 {
-char buf[16];
+static char buf[16384];
 unsigned long i;
 
 unsigned long  line1, line2, char1, char2;
@@ -1147,14 +1155,15 @@ RECT r;
     SendMessage(hLN, WM_SETREDRAW, 0, 0);
     int eventMask = SendMessage(hLN, EM_SETEVENTMASK, 0, 0);
 
-    SetWindowText(hLN, "");
+    size_t left = sizeof(buf);
+    size_t chsize, offset = 0U;
     for (i = line1; i <= line2; i++)  {
-      snprintf (buf, sizeof(buf), "%ld:\r\n", i+1);
-      SendMessage(hLN, EM_SETSEL, -1, -1);
-      SendMessage(hLN, EM_REPLACESEL, 0, (LPARAM)buf);
+      chsize = snprintf (buf + offset, left, "%ld:\r\n", i+1);
+      left -= chsize;
+      offset += chsize;
     }
-    SendMessage(hLN, EM_SETSEL, -1, -1);
-    SendMessage(hLN, EM_REPLACESEL, 0, (LPARAM)"\r\n\r\n");
+    chsize = snprintf (buf + offset, left, "\r\n\r\n");
+    SetWindowText(hLN, buf);
 
     dim_t d;
 
