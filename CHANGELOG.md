@@ -1,14 +1,13 @@
 # Change Log
 
-## [v.2.0-rc9](https://github.com/goriy/sif/releases/tag/v.2.0-rc9) (Not released yet)
+## [v.2.0-rc9](https://github.com/goriy/sif/releases/tag/v.2.0-rc9) (2018-09-11)
 
 [Full Changelog](https://github.com/goriy/sif/compare/v.2.0-rc8...v.2.0-rc9)
 
-**Improvements:**
-
 **Fixed bugs:**
 
-**Internal:**
+* line numbers are updated as one SetWindowText call to avoid
+  annoying audible 'bells'
 
 ## [v.2.0-rc8](https://github.com/goriy/sif/releases/tag/v.2.0-rc8) (2017-06-14)
 
