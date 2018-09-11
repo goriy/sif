@@ -2,8 +2,8 @@
 
 $packageName = 'sif'
 $toolsDir    = "$(Split-Path -parent $MyInvocation.MyCommand.Definition)"
-$url         = 'https://github.com/goriy/sif/releases/download/v.2.0-rc9/sif2.zip'
-$url64       = 'https://github.com/goriy/sif/releases/download/v.2.0-rc9/sif2_x64.zip'
+$url         = 'https://github.com/goriy/sif/releases/download/v.2.0-rc10/sif2.zip'
+$url64       = 'https://github.com/goriy/sif/releases/download/v.2.0-rc10/sif2_x64.zip'
 
 $packageArgs = @{
   packageName   = $packageName
